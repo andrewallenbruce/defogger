@@ -6,7 +6,8 @@ Authors@R:
 Description: The goal of defogger is to provide a collection of reliable
     open-source tools to work with Transparency in Coverage (TiC) files.
 License: MIT + file LICENSE
-URL: https://github.com/andrewallenbruce/defogger
+URL: https://github.com/andrewallenbruce/defogger,
+    https://andrewallenbruce.github.io/defogger/
 BugReports: https://github.com/andrewallenbruce/defogger/issues
 Depends: 
     R (>= 2.10)
