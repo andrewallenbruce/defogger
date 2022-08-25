@@ -3,7 +3,7 @@
 \docType{data}
 \name{tic_toc_url_ex}
 \alias{tic_toc_url_ex}
-\title{Sample of a TiC TOC URL}
+\title{Example of a TiC TOC URL}
 \format{
 A vector containing a URL link
 }

@@ -1,0 +1,276 @@
+---
+title: "defogger"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{defogger}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo      = TRUE, 
+  message   = FALSE, 
+  warning   = FALSE,
+  tidy = "styler",
+  comment = "#>",
+  dpi = 72, 
+  out.width = "100%",
+  dev = "png",
+  dev.args = list(png = list(type = "cairo-png")),
+  optipng = "-o1 -quiet",
+  error = TRUE
+)
+
+library(defogger)
+```
+
+This vignette provides an introduction to the basic functionality included in the package.
+
+<br><br>
+
+# Problem Statement
+
+The Transparency in Coverage files only include the NPI of the provider.
+
+## Using the `defog_toc()` Function
+
+```{r}
+# Load package
+library(defogger)
+
+# Assign TiC file link to object
+centene_url <- "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-06-29_ambetter_index.json"
+
+# Retrieve file with defog_get() function
+centene_results <- defog_toc(centene_url) |> 
+  dplyr::slice_head(n = 10)
+
+#----This returns a tibble of 2,598 rows so, 
+#----in the interest of space, we'll look at the first 10
+
+# View first 10 rows of result
+centene_results
+```
+
+<br>
+
+`defog_toc_centene()` is the first of many helper functions, included here to differentiate between Centene as the reporting entity (third party administrator) and it's two sub-entities, Ambetter and Magellan:
+
+<br>
+
+```{r}
+# Add reporting entity and sub-entity
+centene_results <- defog_toc_centene(centene_results)
+
+# View results
+centene_results
+```
+
+<br>
+
+Next, we need to download the Out-of-Network (OON) and In-Network (INN) files.
+
+## Using the `defog_oon()` Function
+
+From the results above, we can filter to the `out_of_network` files and choose a state. California's the only state in the first 10 rows so we'll go with CA:
+
+<br>
+
+```{r}
+# Filter to OON California URL
+centene_oon_CA_url <- centene_results |> 
+  dplyr::filter(rate_type == "out_of_network") |> 
+  dplyr::filter(state == "CA") |> 
+  dplyr::select(location) |> 
+  dplyr::distinct() |> 
+  tibble::deframe()
+
+# View URL
+centene_oon_CA_url
+```
+
+<br>
+
+Next, plug the URL object into the `defog_oon()` function and retrieve the file:
+
+```{r}
+# Retrieve the file
+centene_oon_CA_results <- defog_oon(centene_oon_CA_url) |> dplyr::slice_head(n = 10)
+
+# View results
+centene_oon_CA_results
+```
+
+<br>
+
+This returns all of the information required by the Transparency in Coverage rule. However, simply having a provider's NPI isn't very helpful for analysis. Where do they practice? What specialty are they? Are they part of an organization or just an individual? This is where the NPPES NPI Registry Search comes in.
+
+<br>
+
+## Using the `defog_npi()` Function
+
+First, we need to isolate the distinct NPIs from the `out_of_network` results above and unlist them. There are 247 so we'll take the first 10 to keep this example as lightweight as we can:
+
+<br>
+
+```{r}
+# Filter to distinct NPIs and unlist
+centene_oon_CA_npi <- centene_oon_CA_results |> 
+  dplyr::distinct(npi) |> 
+  dplyr::slice_head(n = 10) |> 
+  unlist(use.names = FALSE)
+
+# View results
+centene_oon_CA_npi
+```
+
+<br>
+
+Then pipe them into the NPPES search function, `defog_npi()`:
+
+```{r}
+centene_oon_CA_npi2 <- centene_oon_CA_npi |> 
+  purrr::map_dfr(defog_npi)
+
+# View results
+centene_oon_CA_npi2
+```
+
+
+```{r}
+# Start with base df and unnest first level
+start <- centene_oon_CA_npi2 |>
+  dplyr::filter(outcome == "results") |>
+  tidyr::unnest(data_lists)
+
+# Isolate the NPI and datetime
+search <- start |>
+  dplyr::select(search:datetime) |>
+  dplyr::mutate(id = search) |>
+  dplyr::select(id, datetime)
+
+## || CREATE ID KEY
+key <- search |>
+  dplyr::select(id) |>
+  unlist(use.names = FALSE)
+
+# Rename number & enumeration type
+basic_1 <- start |>
+  dplyr::select(
+    prov_type = enumeration_type,
+    npi = number) |>
+  dplyr::mutate(
+    npi = as.character(npi),
+    id = key) |>
+  dplyr::relocate(id)
+
+# Basic section
+basic_2 <- start |>
+  dplyr::select(basic) |>
+  tidyr::unnest(basic) |>
+  dplyr::mutate(id = key) |>
+  dplyr::relocate(id)
+
+# Join Columns
+basic <- dplyr::full_join(basic_1, basic_2, by = "id")
+
+# Isolate lists
+lists <- start |>
+  dplyr::select(!(basic)) |>
+  dplyr::select(where(~ is.list(.x) && 
+  (insight::is_empty_object(.x) == FALSE))) |> 
+  dplyr::mutate(id = key)
+
+# Replace Empty Lists with NA
+lists[apply(lists, 2, function(x) lapply(x, length) == 0)] <- NA
+
+# List names for identification
+ls_names <- tibble::enframe(names(lists))
+
+#--------------- BEGIN LISTS
+
+# Addresses section
+addresses <- lists |>
+  dplyr::select(id, addresses) |>
+  tidyr::unnest(cols = c(addresses))
+
+# Join Columns
+#basic_add <- dplyr::full_join(basic, addresses, by = "id")
+
+# Taxonomies
+taxonomies <- lists |>
+  dplyr::select(id, taxonomies) |>
+  tidyr::unnest(cols = c(taxonomies)) |> 
+  datawizard::data_addprefix("tax_", exclude = "id")
+
+# Join Columns
+#basic_add_tax <- dplyr::full_join(basic_add, taxonomies, by = "id")
+
+# Identifiers
+identifiers <- lists |>
+  dplyr::select(id, identifiers) |> 
+  tidyr::unnest(cols = c(identifiers)) |> 
+  datawizard::data_addprefix("id_", exclude = "id")
+
+# Join Columns
+#basic_add_tax_id <- dplyr::full_join(basic_add_tax, identifiers, by = "id")
+
+# Practice Locations
+practiceLocations <- lists |>
+  dplyr::select(id, practiceLocations) |> 
+  tidyr::unnest(cols = c(practiceLocations)) |> 
+  datawizard::data_addprefix("pracloc_", exclude = "id")
+
+# Other Names
+other_names <- lists |>
+  dplyr::select(id, other_names) |> 
+  tidyr::unnest(cols = c(other_names)) |> 
+  datawizard::data_addprefix("other_", exclude = "id")
+
+```
+
+<br>
+
+Next, we can clean up the results with the `prov_nppes_npi_clean()` function:
+
+<br>
+
+```{r}
+centene_oon_CA_npi3 <- centene_oon_CA_npi2 |> 
+  dplyr::group_split(search) |> 
+  purrr::map_dfr(prov_nppes_npi_clean)
+
+centene_oon_CA_npi3
+```
+
+
+```{r}
+# View results
+# centene_oon_CA_npi3
+```
+
+
+## Pivot Columns Wide with `prov_nppes_npi_clean2()`
+
+```{r}
+# centene_oon_CA_npi_wide <- prov_nppes_npi_clean2(centene_oon_CA_npi3)
+# 
+# centene_oon_CA_npi_wide
+```
+
+Then join the two frames for the final output:
+
+```{r}
+# centene_oon_CA_join <- dplyr::full_join(
+#   centene_oon_CA_results, 
+#   centene_oon_CA_npi_wide)
+# 
+# centene_oon_CA_join
+```
+
+
+
+
+<br><br>

@@ -1,4 +1,4 @@
-#' Sample of a TiC TOC URL
+#' Example of a TiC TOC URL
 #'
 #' Sample url link to a machine readable table of contents
 #'(TOC) file from a Transparency in Coverage (TiC) site.

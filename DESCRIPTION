@@ -14,14 +14,22 @@ Depends:
 Imports: 
     attempt,
     curl,
+    datawizard,
     dplyr,
     httr2,
+    insight,
     polite,
+    purrr,
+    stringi,
     stringr,
     tibble,
     tidyr
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
+VignetteBuilder: 
+    knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
