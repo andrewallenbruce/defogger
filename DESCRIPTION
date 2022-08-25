@@ -5,10 +5,24 @@ Authors@R:
     person("Andrew", "Bruce", , "andrewbruce.himni@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5040-4327"))
 Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+License: MIT + file LICENSE
 URL: https://github.com/andrewallenbruce/defogger
 BugReports: https://github.com/andrewallenbruce/defogger/issues
+Depends: 
+    R (>= 2.10)
+Imports: 
+    attempt,
+    curl,
+    dplyr,
+    httr2,
+    polite,
+    stringr,
+    tibble,
+    tidyr
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
