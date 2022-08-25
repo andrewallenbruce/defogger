@@ -1,10 +1,10 @@
 Package: defogger
-Title: What the Package Does (One Line, Title Case)
+Title: Tools for Transparency in Coverage (TiC) Files
 Version: 0.0.0.9000
 Authors@R: 
-    person("Andrew", "Bruce", , "andrewbruce.himni@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0001-5040-4327"))
-Description: What the package does (one paragraph).
+    person("Andrew", "Bruce", , "andrewbruce.himni@gmail.com", role = c("aut", "cre"))
+Description: The goal of defogger is to provide a collection of reliable
+    open-source tools to work with Transparency in Coverage (TiC) files.
 License: MIT + file LICENSE
 URL: https://github.com/andrewallenbruce/defogger
 BugReports: https://github.com/andrewallenbruce/defogger/issues
