@@ -24,7 +24,6 @@ knitr::opts_chunk$set(
 )
 
 library(defogger)
-library(kableExtra)
 ```
 
 ```{r}
@@ -67,13 +66,7 @@ This returns a data frame containing 2,598 rows so, for simplicity's sake, I've 
 ```{r echo=FALSE}
 centene_toc |> 
   dplyr::select(!c(id, plan_id_type, entity)) |> 
-  kableExtra::kbl() |> 
-  kableExtra::kable_styling(
-    bootstrap_options = c("striped", 
-                          "hover", 
-                          "condensed",
-                          "bordered",
-                          "responsive"))
+  knitr::kable()
 ```
 
 <br>
@@ -107,15 +100,7 @@ centene_oon_CA_file <- defog_oon(centene_oon_CA) |>
 ```
 
 ```{r echo=FALSE}
-centene_oon_CA_file |> 
-  #dplyr::select(!c(id, plan_id_type, entity)) |> 
-  kableExtra::kbl() |> 
-  kableExtra::kable_styling(
-    bootstrap_options = c("striped", 
-                          "hover", 
-                          "condensed",
-                          "bordered",
-                          "responsive"))
+centene_oon_CA_file |> knitr::kable()
 ```
 
 <br>
@@ -155,15 +140,7 @@ centene_inn_CA_file <- defog_inn(centene_inn_CA) |>
 ```
 
 ```{r echo=FALSE}
-centene_inn_CA_file |> 
-  #dplyr::select(!c(id, plan_id_type, entity)) |> 
-  kableExtra::kbl() |> 
-  kableExtra::kable_styling(
-    bootstrap_options = c("striped", 
-                          "hover", 
-                          "condensed",
-                          "bordered",
-                          "responsive"))
+centene_inn_CA_file |> knitr::kable()
 ```
 
 <br>
@@ -243,15 +220,7 @@ centene_oon_npi_result <- centene_oon_npi_resp |>
 
 
 ```{r echo=FALSE}
-centene_oon_npi_result |> 
-  #dplyr::select(!c(id, plan_id_type, entity)) |> 
-  kableExtra::kbl() |> 
-  kableExtra::kable_styling(
-    bootstrap_options = c("striped", 
-                          "hover", 
-                          "condensed",
-                          "bordered",
-                          "responsive"))
+centene_oon_npi_result |> knitr::kable()
 ```
 
 <br>
@@ -264,15 +233,7 @@ centene_inn_npi_result <- centene_inn_npi_resp |>
 ```
 
 ```{r echo=FALSE}
-centene_inn_npi_result |> 
-  #dplyr::select(!c(id, plan_id_type, entity)) |> 
-  kableExtra::kbl() |> 
-  kableExtra::kable_styling(
-    bootstrap_options = c("striped", 
-                          "hover", 
-                          "condensed",
-                          "bordered",
-                          "responsive"))
+centene_inn_npi_result |> knitr::kable()
 ```
 
 <br>
@@ -317,22 +278,22 @@ library(SmartEDA)
 ## OON Analysis
 
 ```{r}
-ExpData(centene_oon_npi_join, type = 1)
+ExpData(centene_oon_npi_join, type = 1) |> knitr::kable()
 ```
 
 
 ```{r}
-ExpData(centene_oon_npi_join, type = 2)
+ExpData(centene_oon_npi_join, type = 2) |> knitr::kable()
 ```
 
 
 ## INN Analysis
 
 ```{r}
-ExpData(centene_inn_npi_join, type = 1)
+ExpData(centene_inn_npi_join, type = 1) |> knitr::kable()
 ```
 
 
 ```{r}
-ExpData(centene_inn_npi_join, type = 2)
+ExpData(centene_inn_npi_join, type = 2) |> knitr::kable()
 ```

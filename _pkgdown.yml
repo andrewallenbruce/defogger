@@ -2,7 +2,7 @@ url: https://andrewallenbruce.github.io/defogger/
 
 template:
   bootstrap: 5
-  bootswatch: sandstone
+  bootswatch: lumen
   bslib:
     base_font: {google: "Roboto"}
     heading_font: {google: "Roboto"}
@@ -11,10 +11,10 @@ template:
 
 home:
   sidebar:
-    structure: [toc, links, license, community, citation, authors, dev]
+    structure: [links, license, community, citation, authors, dev]
 
 navbar:
-  bg: primary
+  bg: secondary
   type: dark
   structure:
     left:  [intro, reference, articles, news]
