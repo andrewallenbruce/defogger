@@ -23,199 +23,150 @@ defog_npi_wide <- function(df) {
       dplyr::filter(outcome == "Errors") |>
       tidyr::unnest(data_lists) |>
       dplyr::rename(id = search) |>
-      dplyr::mutate(id = as.numeric(id)) |> ########### Numeric?
-      dplyr::mutate(group = "error",
-                    description = "nppes_npi",
-                    field = "deactivated") |>
-      dplyr::select(id, datetime, group, description, field)
+      dplyr::mutate(id = as.character(id)) |>
+      dplyr::mutate(prov_type = "Deactivated",
+                    npi = id) |>
+      dplyr::select(prov_type, npi, id)
 
     # Bind rows
     results <- errors
 
   } else {
 
-    # Start with base df and unnest first level
+    # Start with base, unnest first level
     start <- df |>
       dplyr::filter(outcome == "results") |>
       tidyr::unnest(data_lists)
 
-    # Isolate the NPI and datetime
-    search <- start |>
-      dplyr::select(search:datetime) |>
-      dplyr::mutate(id = search) |>
-      dplyr::select(id, datetime)
-
     ## || CREATE ID KEY
-    key <- search |>
+    key <- start |>
+      dplyr::mutate(id = search) |>
       dplyr::select(id) |>
       unlist(use.names = FALSE)
 
-    # Rename number & enumeration type / pivot long
+    # Rename number & enumeration type
     basic_1 <- start |>
-      dplyr::select(
-        prov_type = enumeration_type,
-        nppes_npi = number) |>
-      dplyr::mutate(group = "basic",
-                    nppes_npi = as.character(nppes_npi)) |>
-      dplyr::mutate(id = key) |>
-      tidyr::pivot_longer(!c(group, id),
-                          names_to = "description",
-                          values_to = "field") |>
-      dplyr::relocate(id)
+      dplyr::select(prov_type = enumeration_type,
+                    npi = number) |>
+      dplyr::mutate(npi = as.character(npi),
+                    id = key)
 
-    # Basic section / pivot long
+    # BASIC
     basic_2 <- start |>
       dplyr::select(basic) |>
       tidyr::unnest(basic) |>
-      dplyr::mutate(group = "basic") |>
-      dplyr::mutate(id = key) |>
-      tidyr::pivot_longer(!c(group, id),
-                          names_to = "description",
-                          values_to = "field") |>
-      dplyr::relocate(id)
+      dplyr::mutate(id = key)
 
-    # Bind rows
-    results <- dplyr::bind_rows(basic_1, basic_2)
+    #--Join Columns--#
+    results <- dplyr::full_join(basic_1, basic_2, by = "id")
 
-    # Isolate lists / remove if empty
+    # Isolate lists & remove if empty
     lists <- start |>
       dplyr::select(!(basic)) |>
-      dplyr::select(
-        where(~ is.list(.x) && (
-          insight::is_empty_object(.x) == FALSE))) |>
+      dplyr::select(where(~ is.list(.x) &&
+        (insight::is_empty_object(.x) == FALSE))) |>
       dplyr::mutate(id = key)
+
+    # Replace Empty Lists with NA
+    lists[apply(lists, 2, function(x) lapply(x, length) == 0)] <- NA
 
     # List names for identification
     ls_names <- tibble::enframe(names(lists))
 
-    # Addresses section / pivot long
+    # ADDRESSES
     if (nrow(ls_names |> dplyr::filter(value == "addresses")) >= 1) {
 
       addresses <- lists |>
         dplyr::select(id, addresses) |>
         tidyr::unnest(cols = c(addresses)) |>
-        tidyr::pivot_longer(!c(id, address_purpose),
-                            names_to = "description",
-                            values_to = "field") |>
-        dplyr::rename(group = address_purpose) |>
-        dplyr::mutate(group = tolower(group))
+        dplyr::rename(country_abb = country_code,
+                      state_abb = state)
 
-      # Bind rows
-      results <- dplyr::bind_rows(results, addresses)
+      #--Join Columns--#
+      results <- dplyr::full_join(results, addresses, by = "id")
 
     } else {
       invisible("No Addresses")
     }
 
-    # Taxonomies section / pivot long
+    # TAXONOMIES
     if (nrow(ls_names |> dplyr::filter(value == "taxonomies")) >= 1) {
 
       taxonomies <- lists |>
         dplyr::select(id, taxonomies) |>
         tidyr::unnest(cols = c(taxonomies)) |>
-        dplyr::mutate(group = "taxonomies") |>
-        dplyr::mutate(primary = as.character(primary)) |>
-        tidyr::pivot_longer(!c(id, group),
-                            names_to = "description",
-                            values_to = "field")
+        datawizard::data_addprefix("taxon_", exclude = "id")
 
-      # Bind rows
-      results <- dplyr::bind_rows(results, taxonomies)
+      #--Join Columns--#
+      results <- dplyr::full_join(results, taxonomies, by = "id")
 
     } else {
       invisible("No Taxonomies")
     }
 
-    # Identifiers section / pivot long
+    # IDENTIFIERS
     if (nrow(ls_names |> dplyr::filter(value == "identifiers")) >= 1) {
 
       identifiers <- lists |>
         dplyr::select(id, identifiers) |>
         tidyr::unnest(cols = c(identifiers)) |>
-        dplyr::mutate(group = "identifiers") |>
-        tidyr::pivot_longer(!c(id, group),
-                            names_to = "description",
-                            values_to = "field")
+        datawizard::data_addprefix("ident_", exclude = c("id", "identifier"))
 
-      # Bind rows
-      results <- dplyr::bind_rows(results, identifiers)
+      #--Join Columns--#
+      results <- dplyr::full_join(results, identifiers, by = "id")
 
     } else {
       invisible("No Identifiers")
     }
 
-    # Other Names section / pivot long
+    # OTHER NAMES
     if (nrow(ls_names |> dplyr::filter(value == "other_names")) >= 1) {
 
       other_names <- lists |>
         dplyr::select(id, other_names) |>
         tidyr::unnest(cols = c(other_names)) |>
-        dplyr::mutate(group = "other names") |>
-        tidyr::pivot_longer(!c(id, group),
-                            names_to = "description",
-                            values_to = "field")
+        datawizard::data_addprefix("other_names_", exclude = "id")
 
-      # Bind rows
-      results <- dplyr::bind_rows(results, other_names)
+      #--Join Columns--#
+      results <- dplyr::full_join(results, other_names, by = "id")
 
     } else {
       invisible("No Other Names")
     }
 
-    # Practice Locations section / pivot long
+    # PRACTICE LOCATIONS
     if (nrow(ls_names |> dplyr::filter(value == "practiceLocations")) >= 1) {
 
       practiceLocations <- lists |>
         dplyr::select(id, practiceLocations) |>
         tidyr::unnest(cols = c(practiceLocations)) |>
-        dplyr::mutate(group = "practice locations") |>
-        tidyr::pivot_longer(!c(id, group),
-                            names_to = "description",
-                            values_to = "field")
+        dplyr::rename(country_abb = country_code, state_abb = state) |>
+        datawizard::data_addprefix("pract_", exclude = "id")
 
-      # Bind rows
-      results <- dplyr::bind_rows(results, practiceLocations)
+      #--Join Columns--#
+      results <- dplyr::full_join(results, practiceLocations, by = "id")
 
     } else {
       invisible("No Practice Locations")
     }
 
-    # Endpoints section / pivot long
+    # ENDPOINTS
     if (nrow(ls_names |> dplyr::filter(value == "endpoints")) >= 1) {
 
       endpoints <- lists |>
         dplyr::select(id, endpoints) |>
         tidyr::unnest(cols = c(endpoints)) |>
-        dplyr::mutate(group = "endpoints") |>
-        tidyr::pivot_longer(!c(id, group),
-                            names_to = "description",
-                            values_to = "field")
+        datawizard::data_addprefix("endpts_", exclude = "id")
 
-      # Bind rows
-      results <- dplyr::bind_rows(results, endpoints)
+      #--Join Columns--#
+      results <- dplyr::full_join(results, endpoints, by = "id")
 
     } else {
       invisible("No Endpoints")
     }
-    # Final Join
-    results <- dplyr::inner_join(search, results, by = "id")
 
-    # If NPI Type-2, create Authorized Official group
-    if (sum(stringi::stri_count_fixed(results$description, "authorized")) >= 1) {
-
-      results <- results |>
-        dplyr::mutate(group = ifelse(
-          stringr::str_detect(description, "authorized\\sofficial\\s"),
-          stringr::str_match(description, "authorized\\sofficial"), group),
-          description = ifelse(stringr::str_detect(description, "authorized\\sofficial\\s"),
-                               stringr::str_match(description, "authorized\\sofficial\\s(.*)")[, 2], description))
-
-    } else {
-
-      invisible("NPI Type-1")
-
-    }
-
+    # NPPES LOCATION TABLE JOIN
+    results <- dplyr::inner_join(results, defogger::nppes_location_reference)
 
   }
   return(results)

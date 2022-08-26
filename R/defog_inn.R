@@ -49,7 +49,8 @@ defog_inn <- function(url) {
     tidyr::unnest(tin) |>
     dplyr::rename(ein = value) |>
     dplyr::select(!(type)) |>
-    tidyr::unnest(npi)
+    tidyr::unnest(npi) |>
+    dplyr::mutate(npi = as.character(npi))
 
   return(results)
 

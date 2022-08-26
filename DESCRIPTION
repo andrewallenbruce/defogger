@@ -19,8 +19,6 @@ Imports:
     httr2,
     insight,
     polite,
-    purrr,
-    stringi,
     stringr,
     tibble,
     tidyr

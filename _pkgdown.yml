@@ -2,10 +2,10 @@ url: https://andrewallenbruce.github.io/defogger/
 
 template:
   bootstrap: 5
-  bootswatch: litera
+  bootswatch: sandstone
   bslib:
     base_font: {google: "Roboto"}
-    heading_font: {google: "Roboto Slab"}
+    heading_font: {google: "Roboto"}
     code_font: {google: "Fira Code"}
     pkgdown-nav-height: 100px
 
