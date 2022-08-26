@@ -67,8 +67,8 @@ This returns a data frame containing 2,598 rows so, for simplicity's sake, I've 
 ```{r echo=FALSE}
 centene_toc |> 
   dplyr::select(!c(id, plan_id_type, entity)) |> 
-  kbl() |> 
-  kable_styling(
+  kableExtra::kbl() |> 
+  kableExtra::kable_styling(
     bootstrap_options = c("striped", 
                           "hover", 
                           "condensed",
@@ -109,8 +109,8 @@ centene_oon_CA_file <- defog_oon(centene_oon_CA) |>
 ```{r echo=FALSE}
 centene_oon_CA_file |> 
   #dplyr::select(!c(id, plan_id_type, entity)) |> 
-  kbl() |> 
-  kable_styling(
+  kableExtra::kbl() |> 
+  kableExtra::kable_styling(
     bootstrap_options = c("striped", 
                           "hover", 
                           "condensed",
@@ -157,8 +157,8 @@ centene_inn_CA_file <- defog_inn(centene_inn_CA) |>
 ```{r echo=FALSE}
 centene_inn_CA_file |> 
   #dplyr::select(!c(id, plan_id_type, entity)) |> 
-  kbl() |> 
-  kable_styling(
+  kableExtra::kbl() |> 
+  kableExtra::kable_styling(
     bootstrap_options = c("striped", 
                           "hover", 
                           "condensed",
@@ -239,8 +239,19 @@ This gives us two responses from the NPPES API, which we can unpack with the `de
 centene_oon_npi_result <- centene_oon_npi_resp |> 
   dplyr::group_split(search) |> 
   purrr::map_dfr(defog_npi_wide)
+```
 
-centene_oon_npi_result
+
+```{r echo=FALSE}
+centene_oon_npi_result |> 
+  #dplyr::select(!c(id, plan_id_type, entity)) |> 
+  kableExtra::kbl() |> 
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", 
+                          "hover", 
+                          "condensed",
+                          "bordered",
+                          "responsive"))
 ```
 
 <br>
@@ -250,8 +261,18 @@ centene_oon_npi_result
 centene_inn_npi_result <- centene_inn_npi_resp |> 
   dplyr::group_split(search) |> 
   purrr::map_dfr(defog_npi_wide)
+```
 
-centene_inn_npi_result
+```{r echo=FALSE}
+centene_inn_npi_result |> 
+  #dplyr::select(!c(id, plan_id_type, entity)) |> 
+  kableExtra::kbl() |> 
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", 
+                          "hover", 
+                          "condensed",
+                          "bordered",
+                          "responsive"))
 ```
 
 <br>
