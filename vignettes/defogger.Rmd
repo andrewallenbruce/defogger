@@ -1,5 +1,5 @@
 ---
-title: "defogger"
+title: "Defogging Transparency in Coverage Files"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{defogger}
@@ -26,12 +26,12 @@ knitr::opts_chunk$set(
 library(defogger)
 ```
 
+
 ```{r}
+library(tidyverse)
+library(kableExtra)
 library(defogger)
 ```
-
-
-# Getting Started with Transparency in Coverage Files
 
 The path to analyzing a health insurance company's Transparency in Coverage (TiC) files begins at their public TiC site. Centene Corporation's is located [here](https://www.centene.com/price-transparency-files.html). To begin, you simply have to right-click and copy one of the links' URL addresses:
 <br>
@@ -59,14 +59,25 @@ centene_toc <- defog_toc(centene_url) |> dplyr::slice_head(n = 10)
 
 <br>
 
-This returns a data frame containing 2,598 rows so, for simplicity's sake, I've limited it to the first 10 rows:
+This returns a data frame containing 2,598 rows, so, for simplicity's sake, I've limited it to the first 10 rows:
 
 <br>
 
 ```{r echo=FALSE}
 centene_toc |> 
-  dplyr::select(!c(id, plan_id_type, entity)) |> 
-  knitr::kable()
+  dplyr::select(!c(id, 
+                   plan_id_type, 
+                   plan_market_type,
+                   entity)) |> 
+  knitr::kable(
+    col.names = c(
+    "Plan Name", 
+    "Plan ID", 
+    "Rate Type", 
+    "Location"), 
+    align = c('l')) |> 
+  kableExtra::scroll_box(width = "100%",
+                         fixed_thead = TRUE)
 ```
 
 <br>
@@ -86,7 +97,10 @@ centene_oon_CA <- centene_toc |>
   dplyr::select(location) |> 
   dplyr::distinct() |> 
   tibble::deframe()
+```
 
+
+```{r echo=FALSE}
 centene_oon_CA
 ```
 
@@ -100,7 +114,23 @@ centene_oon_CA_file <- defog_oon(centene_oon_CA) |>
 ```
 
 ```{r echo=FALSE}
-centene_oon_CA_file |> knitr::kable()
+centene_oon_CA_file |> 
+  dplyr::select(npi,
+                billing_code,
+                name, 
+                allowed_amount,
+                billed_charge) |> 
+  knitr::kable(
+    col.names = c(
+    "NPI", 
+    "Billing Code", 
+    "Description", 
+    "Allowed Amount", 
+    "Billed Charge"), 
+    align = c('l')) |> 
+  kableExtra::scroll_box(width = "100%", 
+                         height = "100%", 
+                         fixed_thead = TRUE)
 ```
 
 <br>
@@ -124,7 +154,10 @@ centene_inn_CA <- centene_toc |>
   dplyr::select(location) |> 
   dplyr::distinct() |> 
   tibble::deframe()
+```
 
+
+```{r echo=FALSE}
 centene_inn_CA
 ```
 
@@ -140,7 +173,23 @@ centene_inn_CA_file <- defog_inn(centene_inn_CA) |>
 ```
 
 ```{r echo=FALSE}
-centene_inn_CA_file |> knitr::kable()
+centene_inn_CA_file |> 
+  dplyr::select(npi,
+                billing_code,
+                billing_code_modifier,
+                name, 
+                negotiated_rate) |> 
+  knitr::kable(
+    col.names = c(
+    "NPI", 
+    "Billing Code", 
+    "Modifier",
+    "Description", 
+    "Negotiated Rate"), 
+    align = c('l')) |> 
+  kableExtra::scroll_box(width = "100%", 
+                         height = "100%", 
+                         fixed_thead = TRUE)
 ```
 
 <br>
@@ -154,9 +203,7 @@ This is, without a doubt, an embarassment of riches for those of us in healthcar
 
 # Provider Data & the NPPES
 
-Using the [NPPES Registry Search](https://npiregistry.cms.hhs.gov/search), we can retrieve data such as a provider's taxonomy, credentials, gender, NPI type, payer-specific identifiers, etc.
-
-First, we need to isolate the distinct NPIs from both the OON and INN results above. We have five distinct NPIs from the out-of-network file:
+Using the [NPPES Registry Search](https://npiregistry.cms.hhs.gov/search), we can retrieve data such as a provider's taxonomy, credentials, gender, NPI type, payer-specific identifiers, etc. First, we need to isolate the distinct NPIs from both the OON and INN results above. We have five distinct NPIs from the out-of-network file:
 
 <br>
 
@@ -165,7 +212,10 @@ First, we need to isolate the distinct NPIs from both the OON and INN results ab
 centene_oon_npi <- centene_oon_CA_file |> 
   dplyr::distinct(npi) |> 
   unlist(use.names = FALSE)
+```
 
+
+```{r echo=FALSE}
 centene_oon_npi
 ```
 <br>
@@ -179,7 +229,10 @@ And 10 distinct NPIs from the in-network file:
 centene_inn_npi <- centene_inn_CA_file |> 
   dplyr::distinct(npi) |> 
   unlist(use.names = FALSE)
+```
 
+
+```{r echo=FALSE}
 centene_inn_npi
 ```
 
@@ -190,18 +243,24 @@ Next, we pipe them both into {defogger}'s NPPES search function, `defog_npi()`, 
 <br>
 
 ```{r}
-# OON file
+# OON file NPIs
 centene_oon_npi_resp <- centene_oon_npi |> 
   purrr::map_dfr(defog_npi)
+```
 
+
+```{r echo=FALSE}
 centene_oon_npi_resp
 ```
 
 ```{r}
-# INN file
+# INN file NPIs
 centene_inn_npi_resp <- centene_inn_npi |> 
   purrr::map_dfr(defog_npi)
+```
 
+
+```{r echo=FALSE}
 centene_inn_npi_resp
 ```
 
@@ -212,7 +271,7 @@ This gives us two responses from the NPPES API, which we can unpack with the `de
 <br>
 
 ```{r}
-# OON file
+# OON file response
 centene_oon_npi_result <- centene_oon_npi_resp |> 
   dplyr::group_split(search) |> 
   purrr::map_dfr(defog_npi_wide)
@@ -220,20 +279,88 @@ centene_oon_npi_result <- centene_oon_npi_resp |>
 
 
 ```{r echo=FALSE}
-centene_oon_npi_result |> knitr::kable()
+centene_oon_npi_result |> 
+    dplyr::select(npi,
+                  prov_type,
+                  organization_name,
+                  last_name,
+                  first_name,
+                  credential, 
+                  address_1,
+                  city,
+                  state_abb,
+                  taxon_code,
+                  taxon_desc,
+                  identifier,
+                  ident_desc,
+                  ident_issuer) |> 
+  knitr::kable(
+    col.names = c(
+    "NPI", 
+    "Type", 
+    "Org Name",
+    "Last", 
+    "First",
+    "Credential",
+    "Address",
+    "City",
+    "State",
+    "Taxonomy",
+    "Specialty",
+    "ID",
+    "ID Desc",
+    "ID Issuer"), 
+    align = c('l')) |> 
+  kableExtra::scroll_box(width = "100%", 
+                         height = "500px", 
+                         fixed_thead = TRUE)
 ```
 
 <br>
 
 ```{r}
-# INN file
+# INN file response
 centene_inn_npi_result <- centene_inn_npi_resp |> 
   dplyr::group_split(search) |> 
   purrr::map_dfr(defog_npi_wide)
 ```
 
 ```{r echo=FALSE}
-centene_inn_npi_result |> knitr::kable()
+centene_inn_npi_result |> 
+  dplyr::select(npi,
+                prov_type,
+                #organization_name,
+                last_name,
+                first_name,
+                credential, 
+                address_1,
+                city,
+                state_abb,
+                taxon_code,
+                taxon_desc,
+                identifier,
+                ident_desc,
+                ident_issuer) |> 
+  knitr::kable(
+    col.names = c(
+    "NPI", 
+    "Type", 
+    #"Org Name",
+    "Last", 
+    "First",
+    "Credential",
+    "Address",
+    "City",
+    "State",
+    "Taxonomy",
+    "Specialty",
+    "ID",
+    "ID Desc",
+    "ID Issuer"), 
+    align = c('l')) |> 
+  kableExtra::scroll_box(width = "100%", 
+                         height = "500px", 
+                         fixed_thead = TRUE)
 ```
 
 <br>
@@ -243,57 +370,33 @@ We can then join the two pairs of data frames for further analysis:
 <br>
 
 ```{r}
-# OON file
+# OON join
 centene_oon_npi_join <- dplyr::full_join(
   centene_oon_CA_file, 
   centene_oon_npi_result, 
   by = "npi")
+```
 
+
+```{r echo=FALSE}
 centene_oon_npi_join
 ```
 
 <br>
 
 ```{r}
-# INN file
+# INN join
 centene_inn_npi_join <- dplyr::full_join(
   centene_inn_CA_file, 
   centene_inn_npi_result, 
   by = "npi")
+```
 
+
+```{r echo=FALSE}
 centene_inn_npi_join
 ```
 
 
 <br>
-<br>
 
-# Example EDA
-
-```{r}
-library(SmartEDA)
-```
-
-
-## OON Analysis
-
-```{r}
-ExpData(centene_oon_npi_join, type = 1) |> knitr::kable()
-```
-
-
-```{r}
-ExpData(centene_oon_npi_join, type = 2) |> knitr::kable()
-```
-
-
-## INN Analysis
-
-```{r}
-ExpData(centene_inn_npi_join, type = 1) |> knitr::kable()
-```
-
-
-```{r}
-ExpData(centene_inn_npi_join, type = 2) |> knitr::kable()
-```

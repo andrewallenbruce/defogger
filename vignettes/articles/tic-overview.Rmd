@@ -1,0 +1,48 @@
+---
+title: "Transparency in Coverage Guide"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo      = TRUE, 
+  message   = FALSE, 
+  warning   = FALSE,
+  tidy = "styler",
+  comment = "#>",
+  dpi = 72, 
+  out.width = "100%",
+  dev = "png",
+  dev.args = list(png = list(type = "cairo-png")),
+  optipng = "-o1 -quiet"
+)
+```
+
+# What are TiC Files?
+
+On October 29, 2020, HHS and the Departments of Labor and Treasury finalized a **Transparency in Coverage** (TiC) Final Rule (CMS-9115-F) requiring most health plans and issuers in the individual and group commercial markets to disclose cost-sharing estimates and additional content to enrollees upon request, and to publicly post negotiated in-network provider rates, historical out-of-network allowed amounts and billed charges, and drug pricing information, including negotiated rates and historical net prices.
+
+The final rule is the latest in a number of Administration efforts to increase price transparency for healthcare services in order to empower consumers to make informed decisions and to foster price competition in the healthcare market. Beyond consumer empowerment, however, HHS clearly articulates that its principle focus is on counteracting price distortions and driving prices down in the commercial market.
+
+Therefore, just as the Hospital Price Transparency Final Rule, published in November in 2019 and set to take effect January 2021, has faced strong stakeholder opposition and been the subject of legal challenge, so too this final rule may likely be challenged by health plans and other industry stakeholders. Indeed, HHS clearly anticipates that this rule will face legal challenges and has included severability clauses as part of the rule so that even if a portion of the rule is challenged successfully, other provisions of the rule might continue to survive.
+
+# What are MRFs?
+
+A **machine-readable file** (MRF) is defined as a digital representation of data or information in a file that can be imported or read by a computer system for further processing without human intervention, while ensuring no semantic meaning is lost. These files are in the CMS defined format (JSON) and are not meant for a member-friendly search of rates, benefits, or cost sharing. The table of contents is an approved CMS schema approach that combines the in-network rate files and references the locations (URLs) from which the appropriate files can be downloaded.
+
+The Transparency in Coverage Rule requires health insurers and group health plans, including self-funded clients, to provide cost-sharing data to consumers via these MRFs. They must be published on a publicly available site based on the enforcement date of July 1, 2022 for plan years beginning on or after Jan. 1, 2022. These files provide pricing data for covered items and services based on in-network negotiated payment rates and historical out-of-network allowed amounts. A third machine-readable file for prescription drug rates and historical costs has been delayed pending further guidance. Information in these files must be updated and published monthly. The machine-readable files must be available on an internet website free of charge. The user is not required to establish a user account, password, or other credentials and does not require the user to submit any personal identifying information such as a name, email address, or telephone number. Files are not required if there are fewer than 20 claims for a service for a provider.
+
+· Files have requirements regarding font size, accessibility, and security settings.
+
+· Files may be posted on a third party site.
+
+· Files may not be a PDF or Excel.
+
+# What is JSON?
+
+**JavaScript Object Notation** (JSON) is a lightweight data-interchange format. It is easy for humans to read and write. It is easy for machines to parse and generate. It is based on a subset of the JavaScript Programming Language Standard ECMA-262 3rd Edition - December 1999. JSON is a text format that is completely language independent but uses conventions that are familiar to programmers of the C-family of languages, including C, C++, C#, Java, JavaScript, Perl, Python, and many others. These properties make JSON an ideal data-interchange language.
+
+JSON is built on two structures: A collection of name/value pairs. In various languages, this is realized as an object, record, struct, dictionary, hash table, keyed list, or associative array. An ordered list of values. In most languages, this is realized as an array, vector, list, or sequence. These are universal data structures. Virtually all modern programming languages support them in one form or another. It makes sense that a data format that is interchangeable with programming languages also be based on these structures.
+
+
+
+<br><br>
