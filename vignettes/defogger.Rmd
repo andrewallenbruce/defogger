@@ -22,13 +22,12 @@ knitr::opts_chunk$set(
   optipng = "-o1 -quiet",
   error = TRUE
 )
-
 library(defogger)
 ```
 
 
 ```{r}
-library(tidyverse)
+library(dplyr)
 library(kableExtra)
 library(defogger)
 ```
