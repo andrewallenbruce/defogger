@@ -20,6 +20,9 @@ defog_inn <- function(url) {
     curl::has_internet() == TRUE,
     msg = "Please check your internet connection.")
 
+  # Create Location Key
+  location <- url
+
   # Create polite version
   polite_req <- polite::politely(
     httr2::request,
@@ -51,6 +54,10 @@ defog_inn <- function(url) {
     dplyr::select(!(type)) |>
     tidyr::unnest(npi) |>
     dplyr::mutate(npi = as.character(npi))
+
+  # Add location URL
+  results <- results |>
+    dplyr::mutate(location = url)
 
   return(results)
 

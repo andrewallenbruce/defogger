@@ -110,8 +110,9 @@ devtools::install_github("andrewallenbruce/defogger")
 
 ## Usage
 
-Read the [Overview](articles/defogger.html) vignette for an introduction
-to the basic functionality.
+Read the
+[Overview](https://andrewallenbruce.github.io/defogger/articles/defogger.html)
+vignette for an introduction to the basic functionality.
 
 <br>
 
