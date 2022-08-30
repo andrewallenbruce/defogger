@@ -51,9 +51,23 @@ defog_inn <- function(url) {
     tidyr::unnest(provider_groups) |>
     tidyr::unnest(tin) |>
     dplyr::rename(ein = value) |>
-    dplyr::select(!(type)) |>
-    tidyr::unnest(npi) |>
-    dplyr::mutate(npi = as.character(npi))
+    dplyr::select(!(type))
+
+  # Deal with NPI list
+  results <- results |>
+    tidyr::unnest_wider(npi,
+                        names_sep = "_",
+                        simplify = TRUE) |>
+    tidyr::pivot_longer(cols = dplyr::starts_with("npi"),
+                        names_to = "npi_no",
+                        values_to = "npi",
+                        values_drop_na = TRUE) |>
+    dplyr::select(!(npi_no)) |>
+    dplyr::mutate(npi = (as.character(npi)))
+
+  # Add location URL
+  results <- results |>
+    dplyr::mutate(location = url)
 
   # Add location URL
   results <- results |>
