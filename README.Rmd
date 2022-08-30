@@ -21,9 +21,11 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/andrewallenbruce/defogger/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/andrewallenbruce/defogger/actions/workflows/R-CMD-check.yaml)
-[![repo status:
-WIP](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![repo status: WIP](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
+[![code size](https://img.shields.io/github/languages/code-size/andrewallenbruce/defogger.svg)](https://github.com/andrewallenbruce/defogger)
+[![last commit](https://img.shields.io/github/last-commit/andrewallenbruce/defogger.svg)](https://github.com/andrewallenbruce/defogger/commits/main)
+[![Dependencies](https://tinyverse.netlify.com/badge/defogger)](https://cran.r-project.org/package=defogger)
 
 <!-- badges: end -->
 
@@ -32,6 +34,8 @@ aimed at providing a collection of open-source tools for streamlining
 the analysis workflow of Transparency in Coverage (TiC) files.
 
 ## Transparency in Coverage
+
+<br>
 
 > *Health plan price transparency helps consumers know the cost of a
 > covered item or service before receiving care. Beginning July 1, 2022,
@@ -45,12 +49,16 @@ the analysis workflow of Transparency in Coverage (TiC) files.
 > consumers' ability to shop for the health care that best meet their
 > needs.*[^1]
 
+<br>
+
 The [Transparency in Coverage Final
 Rule](https://www.cms.gov/newsroom/fact-sheets/transparency-coverage-final-rule-fact-sheet-cms-9915-f)[^2]
 requires most group health plans and issuers of group or individual
 health insurance to disclose pricing information in the form of
 machine-readable files containing the following sets of costs for items
 and services:
+
+<br>
 
 -   **In-Network Rate File:** Rates for all covered items and services
     between the plan or issuer and in-network providers.
@@ -60,6 +68,8 @@ and services:
 <br>
 
 ### A Unique Opportunity
+
+<br>
 
 [CMS.gov](https://www.cms.gov/) describes the situation perfectly:
 
@@ -95,6 +105,8 @@ patients through care plans; employers could adopt incentives for
 consumers to choose more cost-effective care; and entrepreneurs could
 develop tools that help doctors better engage with patients.
 
+<br>
+
 ## Installation
 
 You can install the development version of {defogger} from
@@ -105,13 +117,17 @@ You can install the development version of {defogger} from
 devtools::install_github("andrewallenbruce/defogger")
 ```
 
+<br>
+
 ## Usage
 
-Read the [overview](articles/defogger.html) for an introduction to the basic functionality.
+Read the [Overview](articles/defogger.html) vignette for an introduction to the basic functionality.
+
+<br>
 
 ## Code of Conduct
 
-Please note that the defogger project is released with a [Contributor
+Please note that the {defogger} project is released with a [Contributor
 Code of
 Conduct](https://andrewallenbruce.github.io/defogger/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
