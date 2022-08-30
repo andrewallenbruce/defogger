@@ -36,7 +36,7 @@ defog_oon <- function(url) {
 
   # Send and save response
   resp <- req |>
-    httr2::req_throttle(50 / 60) |>
+    #httr2::req_throttle(50 / 60) |>
     httr2::req_perform()
 
   # Parse JSON response and save results

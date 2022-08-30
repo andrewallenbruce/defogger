@@ -6,14 +6,15 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/andrewallenbruce/defogger/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/andrewallenbruce/defogger/actions/workflows/R-CMD-check.yaml)
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![repo status:
 WIP](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
+[![License:
+MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://choosealicense.com/licenses/mit/)
 [![code
 size](https://img.shields.io/github/languages/code-size/andrewallenbruce/defogger.svg)](https://github.com/andrewallenbruce/defogger)
 [![last
 commit](https://img.shields.io/github/last-commit/andrewallenbruce/defogger.svg)](https://github.com/andrewallenbruce/defogger/commits/main)
-[![Dependencies](https://tinyverse.netlify.com/badge/defogger)](https://cran.r-project.org/package=defogger)
 
 <!-- badges: end -->
 
@@ -50,6 +51,9 @@ and services:
 
 -   **In-Network Rate File:** Rates for all covered items and services
     between the plan or issuer and in-network providers.
+
+<br>
+
 -   **Allowed Amount File:** Allowed amounts for, and billed charges
     from, out-of-network providers.
 
