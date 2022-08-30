@@ -44,27 +44,51 @@ defog_oon <- function(url) {
     check_type = FALSE,
     simplifyVector = TRUE)
 
-  # Clean Results
-  results <- content$out_of_network |>
-    tidyr::unnest(allowed_amounts) |>
-    tidyr::unnest(service_code) |>
-    tidyr::unnest(payments) |>
-    tidyr::unnest(providers) |>
-    tidyr::unnest(tin) |>
-    dplyr::rename(ein = value) |>
-    dplyr::select(!(type))
+  # Create results df
+  results <- content$out_of_network
 
-  # Deal with NPI list
-  results <- results |>
-    tidyr::unnest_wider(npi,
-                        names_sep = "_",
-                        simplify = TRUE) |>
-    tidyr::pivot_longer(cols = dplyr::starts_with("npi"),
-                        names_to = "npi_no",
-                        values_to = "npi",
-                        values_drop_na = TRUE) |>
-    dplyr::select(!(npi_no)) |>
-    dplyr::mutate(npi = (as.character(npi)))
+  # Test for empty OON lists
+  if (insight::is_empty_object(results) == TRUE) {
+
+    results <- tibble::tibble(
+      name = NA,
+      billing_code_type = NA,
+      billing_code_type_version = NA,
+      billing_code = NA,
+      description = NA,
+      ein = NA,
+      service_code = NA,
+      billing_class = NA,
+      allowed_amount = as.integer(0.00),
+      billed_charge = as.integer(0.00),
+      npi = NA
+    )
+
+  } else {
+
+    # Clean Results
+    results <- results |>
+      tidyr::unnest(allowed_amounts) |>
+      tidyr::unnest(service_code) |>
+      tidyr::unnest(payments) |>
+      tidyr::unnest(providers) |>
+      tidyr::unnest(tin) |>
+      dplyr::rename(ein = value) |>
+      dplyr::select(!(type))
+
+    # Deal with NPI list
+    results <- results |>
+      tidyr::unnest_wider(npi,
+                          names_sep = "_",
+                          simplify = TRUE) |>
+      tidyr::pivot_longer(cols = dplyr::starts_with("npi"),
+                          names_to = "npi_no",
+                          values_to = "npi",
+                          values_drop_na = TRUE) |>
+      dplyr::select(!(npi_no)) |>
+      dplyr::mutate(npi = (as.character(npi)))
+
+  }
 
   # Add location URL
   results <- results |>

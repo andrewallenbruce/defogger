@@ -42,8 +42,34 @@ defog_inn <- function(url) {
     check_type = FALSE,
     simplifyVector = TRUE)
 
+  # Create results df
+  results <- content$in_network
+
+  # Test for empty INN lists
+  if (insight::is_empty_object(results) == TRUE) {
+
+    results <- tibble::tibble(
+      negotiation_arrangement = NA,
+      name = NA,
+      billing_code_type = NA,
+      billing_code_type_version = NA,
+      billing_code = NA,
+      description = NA,
+      negotiated_type = NA,
+      negotiated_rate = as.integer(0.00),
+      expiration_date = NA,
+      service_code = NA,
+      billing_class = NA,
+      additional_information = NA,
+      billing_code_modifier = NA,
+      ein = NA,
+      npi = NA
+    )
+
+  } else {
+
   # Clean Results
-  results <- content$in_network |>
+  results <- results |>
     tidyr::unnest(negotiated_rates) |>
     tidyr::unnest(negotiated_prices) |>
     tidyr::unnest(service_code) |>
@@ -65,9 +91,7 @@ defog_inn <- function(url) {
     dplyr::select(!(npi_no)) |>
     dplyr::mutate(npi = (as.character(npi)))
 
-  # Add location URL
-  results <- results |>
-    dplyr::mutate(location = url)
+  }
 
   # Add location URL
   results <- results |>
