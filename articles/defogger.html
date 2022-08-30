@@ -135,19 +135,19 @@
 <p><br></p>
 <p>This returns a data frame containing 2,598 rows, so, for simplicity’s sake, I’ve limited it to the first 10 rows:</p>
 <p><br></p>
-<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; ">
 <table class="table">
 <thead><tr>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Plan Name
 </th>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Plan ID
 </th>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Rate Type
 </th>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Location
 </th>
 </tr></thead>
@@ -314,22 +314,22 @@ out_of_network
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">centene_oon_CA_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/defog_oon.html">defog_oon</a></span><span class="op">(</span><span class="va">centene_oon_CA</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:100%; overflow-x: scroll; width:100%; ">
+<div style="border: 1px solid #ddd; padding: 5px; ">
 <table class="table">
 <thead><tr>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+<th style="text-align:left;">
 NPI
 </th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+<th style="text-align:left;">
 Billing Code
 </th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+<th style="text-align:left;">
 Description
 </th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+<th style="text-align:left;">
 Allowed Amount
 </th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+<th style="text-align:left;">
 Billed Charge
 </th>
 </tr></thead>
@@ -530,22 +530,22 @@ PHARMACY
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">centene_inn_CA_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/defog_inn.html">defog_inn</a></span><span class="op">(</span><span class="va">centene_inn_CA</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:100%; overflow-x: scroll; width:100%; ">
+<div style="border: 1px solid #ddd; padding: 5px; ">
 <table class="table">
 <thead><tr>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+<th style="text-align:left;">
 NPI
 </th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+<th style="text-align:left;">
 Billing Code
 </th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+<th style="text-align:left;">
 Modifier
 </th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+<th style="text-align:left;">
 Description
 </th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+<th style="text-align:left;">
 Negotiated Rate
 </th>
 </tr></thead>
@@ -759,11 +759,11 @@ STRAPPING OF SHOULDER
 <pre><code><span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 4</span></span></span>
 <span><span class="co">#&gt;   search     datetime            outcome data_lists   </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1104868124 2022-08-29 <span style="color: #949494;">23:09:38</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 1366964330 2022-08-29 <span style="color: #949494;">23:09:40</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 1760041487 2022-08-29 <span style="color: #949494;">23:09:42</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1902967557 2022-08-29 <span style="color: #949494;">23:09:44</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 1710065933 2022-08-29 <span style="color: #949494;">23:09:46</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span></code></pre>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1104868124 2022-08-30 <span style="color: #949494;">04:14:18</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 1366964330 2022-08-30 <span style="color: #949494;">04:14:20</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 1760041487 2022-08-30 <span style="color: #949494;">04:14:22</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1902967557 2022-08-30 <span style="color: #949494;">04:14:24</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 1710065933 2022-08-30 <span style="color: #949494;">04:14:27</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span></code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># INN file NPIs</span></span>
 <span><span class="va">centene_inn_npi_resp</span> <span class="op">&lt;-</span> <span class="va">centene_inn_npi</span> <span class="op">|&gt;</span> </span>
@@ -771,16 +771,16 @@ STRAPPING OF SHOULDER
 <pre><code><span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 4</span></span></span>
 <span><span class="co">#&gt;    search     datetime            outcome data_lists   </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1063050748 2022-08-29 <span style="color: #949494;">23:09:49</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 1114499340 2022-08-29 <span style="color: #949494;">23:09:51</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 1801314687 2022-08-29 <span style="color: #949494;">23:09:53</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1477217966 2022-08-29 <span style="color: #949494;">23:09:55</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 1730531328 2022-08-29 <span style="color: #949494;">23:09:57</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 1578813234 2022-08-29 <span style="color: #949494;">23:09:59</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 1912103383 2022-08-29 <span style="color: #949494;">23:10:01</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1356852495 2022-08-29 <span style="color: #949494;">23:10:03</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1043304702 2022-08-29 <span style="color: #949494;">23:10:05</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 1730294547 2022-08-29 <span style="color: #949494;">23:10:07</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span></code></pre>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1063050748 2022-08-30 <span style="color: #949494;">04:14:29</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 1114499340 2022-08-30 <span style="color: #949494;">04:14:31</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 1801314687 2022-08-30 <span style="color: #949494;">04:14:33</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1477217966 2022-08-30 <span style="color: #949494;">04:14:35</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 1730531328 2022-08-30 <span style="color: #949494;">04:14:38</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 1578813234 2022-08-30 <span style="color: #949494;">04:14:40</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 1912103383 2022-08-30 <span style="color: #949494;">04:14:42</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1356852495 2022-08-30 <span style="color: #949494;">04:14:44</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1043304702 2022-08-30 <span style="color: #949494;">04:14:46</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 1730294547 2022-08-30 <span style="color: #949494;">04:14:48</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span></code></pre>
 <p><br></p>
 <p>This gives us two responses from the NPPES API, which we can unpack with the <code><a href="../reference/defog_npi_wide.html">defog_npi_wide()</a></code> function:</p>
 <p><br></p>
@@ -789,7 +789,7 @@ STRAPPING OF SHOULDER
 <span><span class="va">centene_oon_npi_result</span> <span class="op">&lt;-</span> <span class="va">centene_oon_npi_resp</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_split.html" class="external-link">group_split</a></span><span class="op">(</span><span class="va">search</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="va">defog_npi_wide</span><span class="op">)</span></span></code></pre></div>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; ">
 <table class="table">
 <thead><tr>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
@@ -11405,7 +11405,7 @@ DEA Registration Number
 <span><span class="va">centene_inn_npi_result</span> <span class="op">&lt;-</span> <span class="va">centene_inn_npi_resp</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_split.html" class="external-link">group_split</a></span><span class="op">(</span><span class="va">search</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="va">defog_npi_wide</span><span class="op">)</span></span></code></pre></div>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; ">
 <table class="table">
 <thead><tr>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
@@ -13183,6 +13183,7 @@ NA
 <span>  <span class="va">centene_oon_CA_file</span>, </span>
 <span>  <span class="va">centene_oon_npi_result</span>, </span>
 <span>  by <span class="op">=</span> <span class="st">"npi"</span><span class="op">)</span></span></code></pre></div>
+<p><br></p>
 <pre><code><span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,320 × 68</span></span></span>
 <span><span class="co">#&gt;    name    billi…¹ billi…² billi…³ descr…⁴ ein   servi…⁵ billi…⁶ allow…⁷ bille…⁸</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -13230,6 +13231,81 @@ NA
 <span><span class="co">#&gt; <span style="color: #949494;">#   enumeration_date &lt;chr&gt;, last_updated &lt;chr&gt;, status &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   name_prefix &lt;chr&gt;, country_abb &lt;chr&gt;, country_name &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   address_purpose &lt;chr&gt;, address_type &lt;chr&gt;, address_1 &lt;chr&gt;, city &lt;chr&gt;, …</span></span></span></code></pre>
+<p><br></p>
+<p>These joins give us data frames with the following 68 columns:</p>
+<p><br></p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">centene_oon_npi_join</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "name"                                 </span></span>
+<span><span class="co">#&gt;  [2] "billing_code_type"                    </span></span>
+<span><span class="co">#&gt;  [3] "billing_code_type_version"            </span></span>
+<span><span class="co">#&gt;  [4] "billing_code"                         </span></span>
+<span><span class="co">#&gt;  [5] "description"                          </span></span>
+<span><span class="co">#&gt;  [6] "ein"                                  </span></span>
+<span><span class="co">#&gt;  [7] "service_code"                         </span></span>
+<span><span class="co">#&gt;  [8] "billing_class"                        </span></span>
+<span><span class="co">#&gt;  [9] "allowed_amount"                       </span></span>
+<span><span class="co">#&gt; [10] "billed_charge"                        </span></span>
+<span><span class="co">#&gt; [11] "npi"                                  </span></span>
+<span><span class="co">#&gt; [12] "prov_type"                            </span></span>
+<span><span class="co">#&gt; [13] "id"                                   </span></span>
+<span><span class="co">#&gt; [14] "first_name"                           </span></span>
+<span><span class="co">#&gt; [15] "last_name"                            </span></span>
+<span><span class="co">#&gt; [16] "credential"                           </span></span>
+<span><span class="co">#&gt; [17] "sole_proprietor"                      </span></span>
+<span><span class="co">#&gt; [18] "gender"                               </span></span>
+<span><span class="co">#&gt; [19] "enumeration_date"                     </span></span>
+<span><span class="co">#&gt; [20] "last_updated"                         </span></span>
+<span><span class="co">#&gt; [21] "status"                               </span></span>
+<span><span class="co">#&gt; [22] "name_prefix"                          </span></span>
+<span><span class="co">#&gt; [23] "country_abb"                          </span></span>
+<span><span class="co">#&gt; [24] "country_name"                         </span></span>
+<span><span class="co">#&gt; [25] "address_purpose"                      </span></span>
+<span><span class="co">#&gt; [26] "address_type"                         </span></span>
+<span><span class="co">#&gt; [27] "address_1"                            </span></span>
+<span><span class="co">#&gt; [28] "address_2"                            </span></span>
+<span><span class="co">#&gt; [29] "city"                                 </span></span>
+<span><span class="co">#&gt; [30] "state_abb"                            </span></span>
+<span><span class="co">#&gt; [31] "postal_code"                          </span></span>
+<span><span class="co">#&gt; [32] "telephone_number"                     </span></span>
+<span><span class="co">#&gt; [33] "fax_number"                           </span></span>
+<span><span class="co">#&gt; [34] "taxon_code"                           </span></span>
+<span><span class="co">#&gt; [35] "taxon_desc"                           </span></span>
+<span><span class="co">#&gt; [36] "taxon_state"                          </span></span>
+<span><span class="co">#&gt; [37] "taxon_license"                        </span></span>
+<span><span class="co">#&gt; [38] "taxon_primary"                        </span></span>
+<span><span class="co">#&gt; [39] "ident_code"                           </span></span>
+<span><span class="co">#&gt; [40] "ident_desc"                           </span></span>
+<span><span class="co">#&gt; [41] "ident_issuer"                         </span></span>
+<span><span class="co">#&gt; [42] "identifier"                           </span></span>
+<span><span class="co">#&gt; [43] "ident_state"                          </span></span>
+<span><span class="co">#&gt; [44] "state_name"                           </span></span>
+<span><span class="co">#&gt; [45] "state_region"                         </span></span>
+<span><span class="co">#&gt; [46] "state_division"                       </span></span>
+<span><span class="co">#&gt; [47] "organization_name"                    </span></span>
+<span><span class="co">#&gt; [48] "organizational_subpart"               </span></span>
+<span><span class="co">#&gt; [49] "authorized_official_first_name"       </span></span>
+<span><span class="co">#&gt; [50] "authorized_official_last_name"        </span></span>
+<span><span class="co">#&gt; [51] "authorized_official_middle_name"      </span></span>
+<span><span class="co">#&gt; [52] "authorized_official_telephone_number" </span></span>
+<span><span class="co">#&gt; [53] "authorized_official_title_or_position"</span></span>
+<span><span class="co">#&gt; [54] "other_names_organization_name"        </span></span>
+<span><span class="co">#&gt; [55] "other_names_type"                     </span></span>
+<span><span class="co">#&gt; [56] "other_names_code"                     </span></span>
+<span><span class="co">#&gt; [57] "authorized_official_name_prefix"      </span></span>
+<span><span class="co">#&gt; [58] "pract_country_abb"                    </span></span>
+<span><span class="co">#&gt; [59] "pract_country_name"                   </span></span>
+<span><span class="co">#&gt; [60] "pract_address_purpose"                </span></span>
+<span><span class="co">#&gt; [61] "pract_address_type"                   </span></span>
+<span><span class="co">#&gt; [62] "pract_address_1"                      </span></span>
+<span><span class="co">#&gt; [63] "pract_city"                           </span></span>
+<span><span class="co">#&gt; [64] "pract_state_abb"                      </span></span>
+<span><span class="co">#&gt; [65] "pract_postal_code"                    </span></span>
+<span><span class="co">#&gt; [66] "pract_telephone_number"               </span></span>
+<span><span class="co">#&gt; [67] "pract_fax_number"                     </span></span>
+<span><span class="co">#&gt; [68] "middle_name"</span></span></code></pre></div>
+<p><br></p>
+<p>Please see the <a href="https://andrewallenbruce.github.io/defogger/index.html">Insert Vignette Here</a> vignette for an example of a much more in-depth analysis.</p>
 <p><br></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
