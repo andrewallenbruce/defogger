@@ -31,7 +31,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-secondary"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">defogger</a>
 
@@ -131,7 +131,8 @@
 <p><br></p>
 <p>You can retrieve and parse a TOC file with the <code><a href="../reference/defog_toc.html">defog_toc()</a></code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">centene_toc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/defog_toc.html">defog_toc</a></span><span class="op">(</span><span class="va">centene_url</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">centene_toc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/defog_toc.html">defog_toc</a></span><span class="op">(</span><span class="va">centene_url</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>               <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 <p>This returns a data frame containing 2,598 rows, so, for simplicity’s sake, I’ve limited it to the first 10 rows:</p>
 <p><br></p>
@@ -313,7 +314,7 @@ out_of_network
 <p>Next, plug the URL object into the <code><a href="../reference/defog_oon.html">defog_oon()</a></code> function and retrieve the file:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">centene_oon_CA_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/defog_oon.html">defog_oon</a></span><span class="op">(</span><span class="va">centene_oon_CA</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<span>                       <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 5px; ">
 <table class="table">
 <thead><tr>
@@ -529,7 +530,7 @@ PHARMACY
 <p><br></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">centene_inn_CA_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/defog_inn.html">defog_inn</a></span><span class="op">(</span><span class="va">centene_inn_CA</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<span>                       <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 5px; ">
 <table class="table">
 <thead><tr>
@@ -736,8 +737,8 @@ STRAPPING OF SHOULDER
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># OON file</span></span>
 <span><span class="va">centene_oon_npi</span> <span class="op">&lt;-</span> <span class="va">centene_oon_CA_file</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">npi</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span>use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span>                   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">npi</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>                   <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span>use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; [1] "1104868124" "1366964330" "1760041487" "1902967557" "1710065933"</span></span></code></pre>
 <p><br></p>
 <p>And 10 distinct NPIs from the in-network file:</p>
@@ -745,8 +746,8 @@ STRAPPING OF SHOULDER
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># INN file</span></span>
 <span><span class="va">centene_inn_npi</span> <span class="op">&lt;-</span> <span class="va">centene_inn_CA_file</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">npi</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span>use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span>                   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">npi</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>                   <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span>use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt;  [1] "1063050748" "1114499340" "1801314687" "1477217966" "1730531328"</span></span>
 <span><span class="co">#&gt;  [6] "1578813234" "1912103383" "1356852495" "1043304702" "1730294547"</span></span></code></pre>
 <p><br></p>
@@ -755,40 +756,40 @@ STRAPPING OF SHOULDER
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># OON file NPIs</span></span>
 <span><span class="va">centene_oon_npi_resp</span> <span class="op">&lt;-</span> <span class="va">centene_oon_npi</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="va">defog_npi</span><span class="op">)</span></span></code></pre></div>
+<span>                        <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="va">defog_npi</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 4</span></span></span>
 <span><span class="co">#&gt;   search     datetime            outcome data_lists   </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1104868124 2022-08-30 <span style="color: #949494;">21:59:59</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 1366964330 2022-08-30 <span style="color: #949494;">22:00:01</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 1760041487 2022-08-30 <span style="color: #949494;">22:00:03</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1902967557 2022-08-30 <span style="color: #949494;">22:00:05</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 1710065933 2022-08-30 <span style="color: #949494;">22:00:07</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span></code></pre>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1104868124 2022-09-02 <span style="color: #949494;">06:06:35</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 1366964330 2022-09-02 <span style="color: #949494;">06:06:37</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 1760041487 2022-09-02 <span style="color: #949494;">06:06:40</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1902967557 2022-09-02 <span style="color: #949494;">06:06:42</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 1710065933 2022-09-02 <span style="color: #949494;">06:06:44</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span></code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># INN file NPIs</span></span>
 <span><span class="va">centene_inn_npi_resp</span> <span class="op">&lt;-</span> <span class="va">centene_inn_npi</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="va">defog_npi</span><span class="op">)</span></span></code></pre></div>
+<span>                        <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="va">defog_npi</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 4</span></span></span>
 <span><span class="co">#&gt;    search     datetime            outcome data_lists   </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1063050748 2022-08-30 <span style="color: #949494;">22:00:09</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 1114499340 2022-08-30 <span style="color: #949494;">22:00:11</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 1801314687 2022-08-30 <span style="color: #949494;">22:00:13</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1477217966 2022-08-30 <span style="color: #949494;">22:00:15</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 1730531328 2022-08-30 <span style="color: #949494;">22:00:17</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 1578813234 2022-08-30 <span style="color: #949494;">22:00:19</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 1912103383 2022-08-30 <span style="color: #949494;">22:00:21</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1356852495 2022-08-30 <span style="color: #949494;">22:00:23</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1043304702 2022-08-30 <span style="color: #949494;">22:00:25</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 1730294547 2022-08-30 <span style="color: #949494;">22:00:28</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span></code></pre>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1063050748 2022-09-02 <span style="color: #949494;">06:06:46</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 1114499340 2022-09-02 <span style="color: #949494;">06:06:48</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 1801314687 2022-09-02 <span style="color: #949494;">06:06:51</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 1477217966 2022-09-02 <span style="color: #949494;">06:06:53</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 1730531328 2022-09-02 <span style="color: #949494;">06:06:55</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 1578813234 2022-09-02 <span style="color: #949494;">06:06:57</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 1912103383 2022-09-02 <span style="color: #949494;">06:06:59</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1356852495 2022-09-02 <span style="color: #949494;">06:07:02</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1043304702 2022-09-02 <span style="color: #949494;">06:07:04</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 1730294547 2022-09-02 <span style="color: #949494;">06:07:06</span> results <span style="color: #949494;">&lt;df [1 × 11]&gt;</span></span></span></code></pre>
 <p><br></p>
 <p>This gives us two responses from the NPPES API, which we can unpack with the <code><a href="../reference/defog_npi_wide.html">defog_npi_wide()</a></code> function:</p>
 <p><br></p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># OON file response</span></span>
 <span><span class="va">centene_oon_npi_result</span> <span class="op">&lt;-</span> <span class="va">centene_oon_npi_resp</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_split.html" class="external-link">group_split</a></span><span class="op">(</span><span class="va">search</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="va">defog_npi_wide</span><span class="op">)</span></span></code></pre></div>
+<span>                          <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_split.html" class="external-link">group_split</a></span><span class="op">(</span><span class="va">search</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>                          <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="va">defog_npi_wide</span><span class="op">)</span></span></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; ">
 <table class="table">
 <thead><tr>
@@ -11403,8 +11404,8 @@ DEA Registration Number
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># INN file response</span></span>
 <span><span class="va">centene_inn_npi_result</span> <span class="op">&lt;-</span> <span class="va">centene_inn_npi_resp</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_split.html" class="external-link">group_split</a></span><span class="op">(</span><span class="va">search</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="va">defog_npi_wide</span><span class="op">)</span></span></code></pre></div>
+<span>                          <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_split.html" class="external-link">group_split</a></span><span class="op">(</span><span class="va">search</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>                          <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="va">defog_npi_wide</span><span class="op">)</span></span></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; ">
 <table class="table">
 <thead><tr>
@@ -13179,10 +13180,9 @@ NA
 <p><br></p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># OON join</span></span>
-<span><span class="va">centene_oon_npi_join</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">(</span></span>
-<span>  <span class="va">centene_oon_CA_file</span>, </span>
-<span>  <span class="va">centene_oon_npi_result</span>, </span>
-<span>  by <span class="op">=</span> <span class="st">"npi"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">centene_oon_npi_join</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">(</span><span class="va">centene_oon_CA_file</span>, </span>
+<span>                                         <span class="va">centene_oon_npi_result</span>, </span>
+<span>                                         by <span class="op">=</span> <span class="st">"npi"</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 <pre><code><span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,320 × 69</span></span></span>
 <span><span class="co">#&gt;    name    billi…¹ billi…² billi…³ descr…⁴ ein   servi…⁵ billi…⁶ allow…⁷ bille…⁸</span></span>
@@ -13207,10 +13207,9 @@ NA
 <p><br></p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># INN join</span></span>
-<span><span class="va">centene_inn_npi_join</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">(</span></span>
-<span>  <span class="va">centene_inn_CA_file</span>, </span>
-<span>  <span class="va">centene_inn_npi_result</span>, </span>
-<span>  by <span class="op">=</span> <span class="st">"npi"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">centene_inn_npi_join</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">(</span><span class="va">centene_inn_CA_file</span>, </span>
+<span>                                         <span class="va">centene_inn_npi_result</span>, </span>
+<span>                                         by <span class="op">=</span> <span class="st">"npi"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 42 × 69</span></span></span>
 <span><span class="co">#&gt;    negot…¹ name  billi…² billi…³ billi…⁴ descr…⁵ negot…⁶ negot…⁷ expir…⁸ servi…⁹</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
@@ -13306,7 +13305,7 @@ NA
 <span><span class="co">#&gt; [68] "pract_fax_number"                     </span></span>
 <span><span class="co">#&gt; [69] "middle_name"</span></span></code></pre></div>
 <p><br></p>
-<p>Please see the <a href="https://andrewallenbruce.github.io/defogger/index.html">Insert Vignette Here</a> vignette for an example of a much more in-depth analysis.</p>
+<p>Please see the <a href="https://andrewallenbruce.github.io/defogger/articles/tic-overview.html">Big Data: dm, arrow &amp; duckdb</a> vignette for an example of a much more in-depth analysis.</p>
 <p><br></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
