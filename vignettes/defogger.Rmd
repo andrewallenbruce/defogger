@@ -13,7 +13,6 @@ knitr::opts_chunk$set(
   echo      = TRUE, 
   message   = FALSE, 
   warning   = FALSE,
-  tidy = "styler",
   comment = "#>",
   dpi = 72, 
   out.width = "100%",
@@ -53,7 +52,8 @@ centene_url <- "https://www.centene.com/content/dam/centene/Centene%20Corporate/
 You can retrieve and parse a TOC file with the `defog_toc()` function:
 
 ```{r}
-centene_toc <- defog_toc(centene_url) |> dplyr::slice_head(n = 10)
+centene_toc <- defog_toc(centene_url) |> 
+               dplyr::slice_head(n = 10)
 ```
 
 <br>
@@ -111,7 +111,7 @@ Next, plug the URL object into the `defog_oon()` function and retrieve the file:
 
 ```{r}
 centene_oon_CA_file <- defog_oon(centene_oon_CA) |> 
-  dplyr::slice_head(n = 10)
+                       dplyr::slice_head(n = 10)
 ```
 
 ```{r echo=FALSE}
@@ -168,7 +168,7 @@ And plug the URL object into the `defog_inn()` function:
 
 ```{r}
 centene_inn_CA_file <- defog_inn(centene_inn_CA) |> 
-  dplyr::slice_head(n = 10)
+                       dplyr::slice_head(n = 10)
 ```
 
 ```{r echo=FALSE}
@@ -207,8 +207,8 @@ Using the [NPPES Registry Search](https://npiregistry.cms.hhs.gov/search), we ca
 ```{r}
 # OON file
 centene_oon_npi <- centene_oon_CA_file |> 
-  dplyr::distinct(npi) |> 
-  unlist(use.names = FALSE)
+                   dplyr::distinct(npi) |> 
+                   unlist(use.names = FALSE)
 ```
 
 
@@ -224,8 +224,8 @@ And 10 distinct NPIs from the in-network file:
 ```{r}
 # INN file
 centene_inn_npi <- centene_inn_CA_file |> 
-  dplyr::distinct(npi) |> 
-  unlist(use.names = FALSE)
+                   dplyr::distinct(npi) |> 
+                   unlist(use.names = FALSE)
 ```
 
 
@@ -242,7 +242,7 @@ Next, we pipe them both into {defogger}'s NPPES search function, `defog_npi()`, 
 ```{r}
 # OON file NPIs
 centene_oon_npi_resp <- centene_oon_npi |> 
-  purrr::map_dfr(defog_npi)
+                        purrr::map_dfr(defog_npi)
 ```
 
 
@@ -253,7 +253,7 @@ centene_oon_npi_resp
 ```{r}
 # INN file NPIs
 centene_inn_npi_resp <- centene_inn_npi |> 
-  purrr::map_dfr(defog_npi)
+                        purrr::map_dfr(defog_npi)
 ```
 
 
@@ -270,8 +270,8 @@ This gives us two responses from the NPPES API, which we can unpack with the `de
 ```{r}
 # OON file response
 centene_oon_npi_result <- centene_oon_npi_resp |> 
-  dplyr::group_split(search) |> 
-  purrr::map_dfr(defog_npi_wide)
+                          dplyr::group_split(search) |> 
+                          purrr::map_dfr(defog_npi_wide)
 ```
 
 
@@ -318,8 +318,8 @@ centene_oon_npi_result |>
 ```{r}
 # INN file response
 centene_inn_npi_result <- centene_inn_npi_resp |> 
-  dplyr::group_split(search) |> 
-  purrr::map_dfr(defog_npi_wide)
+                          dplyr::group_split(search) |> 
+                          purrr::map_dfr(defog_npi_wide)
 ```
 
 ```{r echo=FALSE}
@@ -368,10 +368,9 @@ We can then join the two pairs of data frames for further analysis:
 
 ```{r}
 # OON join
-centene_oon_npi_join <- dplyr::full_join(
-  centene_oon_CA_file, 
-  centene_oon_npi_result, 
-  by = "npi")
+centene_oon_npi_join <- dplyr::full_join(centene_oon_CA_file, 
+                                         centene_oon_npi_result, 
+                                         by = "npi")
 ```
 
 <br>
@@ -384,10 +383,9 @@ centene_oon_npi_join
 
 ```{r}
 # INN join
-centene_inn_npi_join <- dplyr::full_join(
-  centene_inn_CA_file, 
-  centene_inn_npi_result, 
-  by = "npi")
+centene_inn_npi_join <- dplyr::full_join(centene_inn_CA_file, 
+                                         centene_inn_npi_result, 
+                                         by = "npi")
 ```
 
 
@@ -406,6 +404,6 @@ names(centene_oon_npi_join)
 ```
 <br>
 
-Please see the [Insert Vignette Here](https://andrewallenbruce.github.io/defogger/index.html) vignette for an example of a much more in-depth analysis.
+Please see the [Big Data: dm, arrow & duckdb](https://andrewallenbruce.github.io/defogger/articles/tic-overview.html) vignette for an example of a much more in-depth analysis.
 
 <br>

@@ -1,10 +1,9 @@
-#' Checks NPI number for compliance with the Luhn algorithm
-#'
+#' Validate NPI input
+#' @description Checks NPI for compliance with the Luhn algorithm
 #' @inheritParams defog_npi
-#'
 #' @return boolean, TRUE or FALSE
+#' @keywords internal
 #' @export
-#'
 #' @examples
 #' defog_npi_luhn(1528060837)
 

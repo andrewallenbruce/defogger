@@ -4,7 +4,7 @@
 \name{defogger-package}
 \alias{defogger}
 \alias{defogger-package}
-\title{defogger: Tools for Transparency in Coverage (TiC) Files}
+\title{defogger: Streamlined Workflow for Transparency in Coverage (TiC) Data Analysis}
 \description{
 The goal of defogger is to provide a collection of reliable open-source tools to work with Transparency in Coverage (TiC) files.
 }

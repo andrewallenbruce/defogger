@@ -1,5 +1,5 @@
 Package: defogger
-Title: Tools for Transparency in Coverage (TiC) Files
+Title: Streamlined Workflow for Transparency in Coverage (TiC) Data Analysis
 Version: 0.0.0.9001
 Authors@R: 
     person("Andrew", "Bruce", , "andrewbruce.himni@gmail.com", role = c("aut", "cre"))

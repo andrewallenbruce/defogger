@@ -1,5 +1,4 @@
 #' Download and Parse TiC TOC urls
-#'
 #' @param url url from a third-party-administrator's (TPA)
 #' machine-readable Transparency-in-Coverage (TiC) filings
 #' containing the Table of Contents (TOC) of plans.

@@ -3,7 +3,7 @@
 \docType{data}
 \name{tic_toc_url_ex}
 \alias{tic_toc_url_ex}
-\title{Example of a TiC TOC URL}
+\title{Example of a TOC url}
 \format{
 A vector containing a URL link
 }
@@ -11,7 +11,7 @@ A vector containing a URL link
 tic_toc_url_ex
 }
 \description{
-Sample url link to a machine readable table of contents
+Example url link to a machine readable table of contents
 (TOC) file from a Transparency in Coverage (TiC) site.
 }
-\keyword{datasets}
+\keyword{internal}
