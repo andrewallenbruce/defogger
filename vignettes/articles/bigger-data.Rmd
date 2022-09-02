@@ -1,0 +1,251 @@
+---
+title: "Working with Large Data"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo      = TRUE, 
+  message   = FALSE, 
+  warning   = FALSE,
+  comment = "#>",
+  dpi = 72, 
+  out.width = "100%",
+  dev = "png",
+  dev.args = list(png = list(type = "cairo-png")),
+  optipng = "-o1 -quiet",
+  error = TRUE
+)
+```
+
+<br>
+
+These files come from [Centene Corporation](https://www.centene.com/price-transparency-files.html)'s Transparency in Coverage site.
+
+<br>
+
+```{r}
+library(dplyr)
+library(purrr)
+library(dm)
+library(defogger)
+```
+
+<br>
+
+# Build the Centene TOC Table
+
+<br>
+
+```{r}
+centene_toc_urls <- data.frame(
+  entity = c("Centene"),
+  sub_entity = c("Ambetter", 
+                "Fidelis", 
+                "QualChoice", 
+                "HealthNet", 
+                "MHN", 
+                "WellCare_NC"),
+  type = c("toc"),
+  origin = c("https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_ambetter_index.json", 
+               "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_fidelis_index.json",
+               "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_qualchoice_index.json",
+               "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_healthnet_index.json",
+               "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_mhn_index.json",
+               "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_wellcarenc_index.json"))
+```
+
+```{r echo=FALSE}
+centene_toc_urls
+```
+<br><br>
+
+## QualChoice TOC Sub-indices
+
+```{r}
+centene_toc_qualchoice_subs <- data.frame(
+  entity = c("Centene"),
+  sub_entity = c("QualChoice"),
+  sub_index = c("Alf",
+                "Arnold_Bevins",
+                "Hot_Springs",
+                "Dillards",
+                "JV_Manufacturing",
+                "Royal_Financial"),
+  type = c("toc"),
+  origin =   c("https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_qualchoice_alf_index.json",
+               "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_qualchoice_arnold_and_blevins_index.json",
+               "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_qualchoice_city_of_hot_springs_index.json",
+               "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_qualchoice_dillards_index.json",
+               "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_qualchoice_jv_manufacturing_index.json",
+               "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_qualchoice_royal_financial_index.json"))
+```
+
+```{r echo=FALSE}
+centene_toc_qualchoice_subs
+```
+
+<br><br>
+
+## Final TOC Table
+
+```{r}
+toc_url_centene <- dplyr::full_join(centene_toc_urls, 
+                                    centene_toc_qualchoice_subs, 
+                                    by = c("entity", 
+                                           "sub_entity", 
+                                           "type", 
+                                           "origin"), copy = TRUE) |> 
+                   dplyr::relocate(sub_index, .after = "sub_entity")
+```
+
+
+```{r echo=FALSE}
+toc_url_centene
+```
+# Build the Centene RESP Table
+
+```{r}
+toc_resp_centene <- toc_url_centene |> 
+                    dplyr::select(origin) |>
+                    dplyr::distinct() |> 
+                    tibble::deframe() |> 
+                    purrr::map_dfr(defog_toc)
+
+toc_resp_centene <- toc_resp_centene |> 
+                    dplyr::rename(type = rate_type) |> 
+                    dplyr::mutate(entity = dplyr::case_when(
+                    entity == "Centene Management Company LLC" ~ "Centene", 
+                    TRUE ~ entity))
+```
+
+```{r echo=FALSE}
+toc_resp_centene
+```
+
+<br><br>
+
+# Creating a Relational Database with `dm`
+
+You can build a relational database in R with the {dm} package, using only data frames in your R environment. Once your data model is complete, you can deploy it to a range of database management systems (DBMS). First, we need to create a dm object:
+
+```{r}
+dm_centene_no_keys <- dm::dm(toc_url_centene, toc_resp_centene)
+```
+
+```{r echo=FALSE}
+dm_centene_no_keys
+```
+
+<br><br>
+
+Next, we need to define the primary keys:
+
+```{r}
+dm::dm_enum_pk_candidates(dm = dm_centene_no_keys, table = toc_url_centene)
+```
+
+```{r}
+dm_centene_only_pks <- dm_centene_no_keys |> dm::dm_add_pk(table = toc_url_centene, columns = origin)
+```
+
+
+```{r echo=FALSE}
+dm_centene_only_pks
+```
+<br><br>
+
+Now, we need to link the two tables by a foreign key:
+
+```{r}
+dm::dm_enum_fk_candidates(dm = dm_centene_only_pks, table = toc_resp_centene, ref_table = toc_url_centene)
+```
+
+```{r}
+dm_centene_all_keys <- dm_centene_only_pks |> dm::dm_add_fk(table = toc_resp_centene, columns = origin, ref_table = toc_url_centene)
+```
+
+
+```{r echo=FALSE}
+dm_centene_all_keys
+```
+<br><br>
+
+## Visualizing the Data Model
+
+```{r}
+dm_centene_no_keys |> dm::dm_draw(rankdir = "TB", view_type = "all")
+```
+
+```{r}
+dm_centene_only_pks |> dm::dm_draw(rankdir = "TB", view_type = "all")
+```
+
+```{r}
+dm_centene_all_keys |> dm::dm_draw(rankdir = "LR", view_type = "all")
+```
+
+<br><br>
+
+# Out-of-Network Files
+
+<br>
+
+```{r}
+centene_oon_urls <- centene_toc_resp |> 
+                    dplyr::filter(type == "out_of_network") |> 
+                    dplyr::select(location) |> 
+                    dplyr::distinct() |> 
+                    tibble::deframe()
+```
+
+
+```{r echo=FALSE}
+centene_oon_urls
+```
+<br><br>
+
+```{r}
+centene_oon_files <- centene_oon_urls |> 
+                     purrr::map_dfr(defog_oon)
+```
+
+```{r echo=FALSE}
+centene_oon_files
+```
+
+
+```{r}
+dm_centene_oon <- dm::dm(centene_oon_files)
+dm::dm_enum_pk_candidates(dm = dm_centene_oon, table = centene_oon_files)
+```
+
+<br><br>
+
+# In-Network Files
+
+<br>
+
+```{r}
+centene_inn_urls <- centene_toc_resp |> 
+                    dplyr::filter(type == "in_network") |> 
+                    dplyr::select(location) |> 
+                    dplyr::distinct() |> 
+                    tibble::deframe()
+```
+
+
+```{r echo=FALSE}
+centene_inn_urls
+```
+
+<br>
+
+```{r}
+# centene_inn_files <- centene_inn_urls |> 
+#                      purrr::map_dfr(defog_inn)
+```
+
+```{r echo=FALSE}
+# centene_inn_files
+```

@@ -26,6 +26,9 @@ Suggests:
     kableExtra,
     knitr,
     purrr,
+    dm,
+    DiagrammeR,
+    DiagrammeRsvg,
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: 

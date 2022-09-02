@@ -8,3 +8,5 @@
 ^pkgdown$
 ^CODE_OF_CONDUCT\.md$
 ^vignettes/articles$
+^doc$
+^Meta$

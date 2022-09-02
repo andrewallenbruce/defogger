@@ -95,6 +95,10 @@ defog_toc <- function(url) {
       dplyr::filter(!is.na(location))
   }
 
+  # Add url as location key
+  results <- results |>
+    dplyr::mutate(origin = url)
+
   return(results)
 
 }
