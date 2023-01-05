@@ -1,11 +1,11 @@
-pandoc: 2.14.2
-pkgdown: 2.0.6
+pandoc: 2.19.2
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   bigger-data: bigger-data.html
   tic-overview: tic-overview.html
   defogger: defogger.html
-last_built: 2022-09-03T07:31Z
+last_built: 2023-01-05T15:45Z
 urls:
   reference: https://andrewallenbruce.github.io/defogger/reference
   article: https://andrewallenbruce.github.io/defogger/articles
