@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# `defogger` <a href="https://andrewallenbruce.github.io/defogger/"><img src="man/figures/logo.svg" align="right" height="500"/></a>
+# `defogger` <a href="https://andrewallenbruce.github.io/defogger/"><img src="man/figures/logo.svg" align="right" height="200"/></a>
 
 > Streamlined Workflow for Transparency in Coverage (TiC) Data Analysis
 
@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://choosealicense.com/licenses/mit/)
 [![code size](https://img.shields.io/github/languages/code-size/andrewallenbruce/defogger.svg)](https://github.com/andrewallenbruce/defogger)
 [![last commit](https://img.shields.io/github/last-commit/andrewallenbruce/defogger.svg)](https://github.com/andrewallenbruce/defogger/commits/main)
-
+[![Codecov test coverage](https://codecov.io/gh/andrewallenbruce/defogger/branch/main/graph/badge.svg)](https://app.codecov.io/gh/andrewallenbruce/defogger?branch=main)
 <!-- badges: end -->
 
 <br><br>
@@ -41,26 +41,21 @@ You can install the development version of `defogger` from
 ``` r
 # install.packages("devtools")
 devtools::install_github("andrewallenbruce/defogger")
+
+# install.packages("remotes")
+remotes::install_github("andrewallenbruce/defogger")
 ```
 
-<br><br>
+```{r}
+# Load library
+library(defogger)
+```
 
-
-## Transparency in Coverage
 
 <br>
 
-> *Health plan price transparency helps consumers know the cost of a
-> covered item or service before receiving care. Beginning July 1, 2022,
-> most group health plans and issuers of group or individual health
-> insurance will begin posting pricing information for covered items and
-> services. This pricing information can be used by third parties, such
-> as researchers and app developers to help consumers better understand
-> the costs associated with their health care. More requirements will go
-> into effect starting on January 1, 2023, and January 1, 2024 which
-> will provide additional access to pricing information and enhance
-> consumers' ability to shop for the health care that best meet their
-> needs.*[^1]
+
+## Defogging Transparency in Coverage Files
 
 <br>
 
@@ -81,41 +76,125 @@ and services:
 -   **Allowed Amount File:** Allowed amounts for, and billed charges
     from, out-of-network providers.
 
-<br><br>
-
-From [CMS.gov](https://www.cms.gov/):
-
->*With the data contained in the machine-readable files from plans and
-issuers, third party developers will be able to create much more
-advanced and accurate price transparency tools. These tools will help
-inform consumers, as well as the broader public, about patterns in
-health care costs and will offer immense opportunities for innovation. 
-Making price transparency information publicly available strengthens the
-work of other health care stakeholders that help provide care or promote
-access to care to consumers, or otherwise aim to protect consumers and
-their interests in the health care system. These entities include
-researchers, regulators, lawmakers, patient and consumer advocates, and
-businesses that provide consumer support tools and services. A key
-aspect of Transparency in Coverage is to make health care pricing
-information more accessible and useful to consumers by making the
-information available to persons and entities with the requisite
-experience and expertise to assist individual consumers and other health
-care purchasers to make informed health care decisions. 
-With information on pricing, these other health care stakeholders can
-better fulfill each of the unique roles they play to improve America's
-health care system for consumers. For instance, with pricing
-information, researchers could better assess the cost-effectiveness of
-various treatments; state regulators could better review issuers'
-proposed rate increases; patient advocates could better help guide
-patients through care plans; employers could adopt incentives for
-consumers to choose more cost-effective care; and entrepreneurs could
-develop tools that help doctors better engage with patients.*
-
-<br><br>
+<br>
 
 ## Usage
 
-Read the [Overview](https://andrewallenbruce.github.io/defogger/articles/defogger.html) vignette for an introduction to the basic functionality.
+```{r}
+res <- httr2::request("https://transparency-in-coverage.uhc.com/api/v1/uhc/blobs/") |> 
+       httr2::req_perform() |> 
+       httr2::resp_body_json(check_type = FALSE, 
+                             simplifyVector = TRUE)
+
+res$blobs |> 
+  tibble::tibble() |> 
+  dplyr::slice_tail() |> 
+  dplyr::glimpse()
+```
+<br><br>
+
+```{r}
+dl <- res$blobs |> tibble::tibble() |> dplyr::slice_tail()
+
+dll <- httr2::request(dl$downloadUrl) |> 
+       httr2::req_perform() |> 
+       httr2::resp_body_json(check_type = FALSE, simplifyVector = TRUE)
+
+dll$reporting_structure |> 
+  tidyr::unnest(cols = c(reporting_plans, in_network_files)) |> 
+  dplyr::glimpse()
+```
+<br><br>
+
+```{r}
+dll$reporting_structure |> 
+  tidyr::unnest(cols = c(reporting_plans, in_network_files)) |> 
+  purrr::pluck("location", 1)
+```
+<br>
+
+```{r}
+dll$reporting_structure |> 
+  tidyr::unnest(cols = c(reporting_plans, in_network_files)) |> 
+  purrr::pluck("location", 2)
+```
+<br><br>
+
+```{r}
+centene_toc_jun <- "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-06-29_ambetter_index.json"
+centene_toc_sep <- "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-09-30_ambetter_index.json"
+centene_toc_dec <- "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-12-29_ambetter_index.json"
+```
+
+<br>
+
+```{r}
+defog_toc(centene_toc_dec) |> 
+  dplyr::select(!c(id, 
+                   plan_id_type, 
+                   plan_market_type, 
+                   entity)) |> 
+  dplyr::slice_head() |> 
+  dplyr::glimpse()
+```
+
+<br>
+
+# Out-of-Network Files
+
+```{r}
+defog_toc(centene_toc_dec) |> 
+  dplyr::filter(rate_type == "out_of_network") |> 
+  dplyr::select(location) |> 
+  dplyr::distinct() |> 
+  tibble::deframe()
+```
+
+<br>
+
+```{r}
+centene_oon <- defog_toc(centene_toc_dec) |> 
+  dplyr::filter(rate_type == "out_of_network") |> 
+  dplyr::select(location) |> 
+  dplyr::distinct()
+
+defog_oon(tibble::deframe(centene_oon[10, ])) |> 
+  dplyr::select(npi, billing_code, name, allowed_amount, billed_charge) |> 
+  knitr::kable()
+```
+
+<br><br>
+
+# In-Network Files
+
+<br>
+
+```{r}
+defog_toc(centene_toc_dec) |> 
+  dplyr::filter(rate_type == "in_network") |> 
+  dplyr::select(location) |> 
+  dplyr::distinct() |> 
+  tibble::deframe()
+```
+
+<br>
+
+```{r}
+centene_inn <- defog_toc(centene_toc_dec) |> 
+  dplyr::filter(rate_type == "in_network") |> 
+  dplyr::select(location) |> 
+  dplyr::distinct()
+
+defog_inn(tibble::deframe(centene_inn[10, ])) |> 
+  dplyr::slice_head(n = 30) |> 
+  dplyr::select(npi,
+                billing_code,
+                billing_code_modifier,
+                name, 
+                negotiated_rate) |> 
+  knitr::kable()
+```
+
 
 <br>
 
@@ -125,7 +204,3 @@ Please note that the `defogger` project is released with a [Contributor
 Code of
 Conduct](https://andrewallenbruce.github.io/defogger/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
-
-[^1]: <https://www.cms.gov/healthplan-price-transparency>
-
-[^2]: PDF of the final rule can be found [here](https://www.cms.gov/CCIIO/Resources/Regulations-and-Guidance/Downloads/CMS-Transparency-in-Coverage-9915F.pdf)

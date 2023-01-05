@@ -11,7 +11,7 @@
 #' healthcare providers.
 #'
 #' @export
-#'
+#' @autoglobal
 #' @examples
 #' \dontrun{defog_oon(oon_url_ex)}
 

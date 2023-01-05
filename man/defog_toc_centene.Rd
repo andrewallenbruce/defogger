@@ -16,6 +16,3 @@ and the sub-entity's name.
 \description{
 Centene: Add Reporting Entity & the Sub-Entity
 }
-\examples{
-defog_toc_centene(centene_toc_ex)
-}

@@ -30,11 +30,18 @@ Suggests:
     DiagrammeR,
     DiagrammeRsvg,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    covr,
+    roxyglobals (>= 0.2.1)
 VignetteBuilder: 
     knitr
+Remotes: 
+    coolbutuseless/terse,
+    anthonynorth/roxyglobals
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+Roxygen: list(
+    markdown = TRUE,
+    roclets = c("collate", "namespace", "rd", "roxyglobals::global_roclet"))
+RoxygenNote: 7.2.3

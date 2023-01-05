@@ -20,6 +20,3 @@ and url location of each rate type's file.
 \description{
 Download and Parse TiC TOC urls
 }
-\examples{
-defog_toc(tic_toc_url_ex)
-}

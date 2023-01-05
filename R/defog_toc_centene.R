@@ -6,9 +6,7 @@
 #' and the sub-entity's name.
 #'
 #' @export
-#'
-#' @examples
-#' defog_toc_centene(centene_toc_ex)
+#' @autoglobal
 
 defog_toc_centene <- function(df) {
 

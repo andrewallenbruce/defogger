@@ -31,16 +31,31 @@ library(kableExtra)
 library(defogger)
 ```
 
-The path to analyzing a health insurance company's Transparency in Coverage (TiC) files begins at their public TiC site. Centene Corporation's is located [here](https://www.centene.com/price-transparency-files.html). To begin, you simply have to right-click and copy one of the links' URL addresses:
-<br>
-
-[![Centene's Transparency in Coverage Site](images/brave_8N1X1S0DdT.png)](https://www.centene.com/price-transparency-files.html)
-
-<br>
-Then assign it to an object in R:
 
 ```{r}
-centene_url <- "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-06-29_ambetter_index.json"
+### UHC download list
+# https://github.com/CMSgov/price-transparency-guide/discussions/534#discussioncomment-3329744
+
+req <- httr2::request("https://transparency-in-coverage.uhc.com/api/v1/uhc/blobs/")
+
+# Send and save response
+resp <- req |> httr2::req_perform()
+
+# Parse JSON response and save results
+content <- resp |> httr2::resp_body_json(check_type = FALSE, simplifyVector = TRUE)
+
+uhc_links <- content$blobs |> tibble::tibble()
+
+print(uhc_links, n = 1000)
+```
+
+
+The path to analyzing a health insurance company's Transparency in Coverage (TiC) files begins at their public TiC site. Centene Corporation's is located [here](https://www.centene.com/price-transparency-files.html). To begin, you simply have to right-click and copy one of the links' URL addresses, then assign it to an object in R:
+
+```{r}
+centene_url_june <- "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-06-29_ambetter_index.json" # June
+centene_url_sept <- "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-09-30_ambetter_index.json" # Sept
+centene_url_dec <- "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-12-29_ambetter_index.json"  # Dec
 ```
 
 <br>
@@ -52,8 +67,9 @@ centene_url <- "https://www.centene.com/content/dam/centene/Centene%20Corporate/
 You can retrieve and parse a TOC file with the `defog_toc()` function:
 
 ```{r}
-centene_toc <- defog_toc(centene_url) |> 
-               dplyr::slice_head(n = 10)
+centene_toc <- defog_toc(centene_url_june)
+nrow(centene_toc)
+ncol(centene_toc)
 ```
 
 <br>
@@ -64,6 +80,7 @@ This returns a data frame containing 2,598 rows, so, for simplicity's sake, I've
 
 ```{r echo=FALSE}
 centene_toc |> 
+  dplyr::slice_head(n = 10) |> 
   dplyr::select(!c(id, 
                    plan_id_type, 
                    plan_market_type,

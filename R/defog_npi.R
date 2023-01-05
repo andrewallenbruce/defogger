@@ -7,7 +7,7 @@
 #' a list-column of the results.
 #'
 #' @export
-#'
+#' @autoglobal
 #' @examples
 #' defog_npi(1528060837)
 

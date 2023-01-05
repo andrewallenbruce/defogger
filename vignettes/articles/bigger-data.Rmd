@@ -33,11 +33,30 @@ library(defogger)
 
 <br>
 
-# Build the Centene TOC Table
+
+```{r}
+library(DiagrammeR)
+
+mermaid("graph TB
+  A[TOC URLs]-->B[TOC URL Responses]
+  B-->C[OON URLs]
+  B-->D[INN URLs]
+  C-->E[OON Responses]
+  D-->F[INN Responses]
+  G{NPI Results}-->E
+  H{NPI Results}-->F
+")
+
+```
+
+<br><br>
+
+# Build the TOC URL Table
 
 <br>
 
 ```{r}
+# Index of TOC URLs
 centene_toc_urls <- data.frame(
   entity = c("Centene"),
   sub_entity = c("Ambetter", 
@@ -53,16 +72,8 @@ centene_toc_urls <- data.frame(
                "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_healthnet_index.json",
                "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_mhn_index.json",
                "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_wellcarenc_index.json"))
-```
 
-```{r echo=FALSE}
-centene_toc_urls
-```
-<br><br>
-
-## QualChoice TOC Sub-indices
-
-```{r}
+# Sub-Index of QualChoice TOC URls
 centene_toc_qualchoice_subs <- data.frame(
   entity = c("Centene"),
   sub_entity = c("QualChoice"),
@@ -79,31 +90,28 @@ centene_toc_qualchoice_subs <- data.frame(
                "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_qualchoice_dillards_index.json",
                "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_qualchoice_jv_manufacturing_index.json",
                "https://www.centene.com/content/dam/centene/Centene%20Corporate/json/DOCUMENT/2022-08-30_qualchoice_royal_financial_index.json"))
+
+
+# Join the two data frames
+toc_url_centene <- dplyr::full_join(
+  centene_toc_urls,
+  centene_toc_qualchoice_subs, 
+  by = c("entity",
+         "sub_entity",
+         "type", 
+         "origin"), 
+  copy = TRUE) |> 
+  dplyr::relocate(sub_index, 
+                  .after = "sub_entity")
 ```
 
 ```{r echo=FALSE}
-centene_toc_qualchoice_subs
+toc_url_centene |> knitr::kable()
 ```
+<br>
 
-<br><br>
+# Build the Response Table
 
-## Final TOC Table
-
-```{r}
-toc_url_centene <- dplyr::full_join(centene_toc_urls, 
-                                    centene_toc_qualchoice_subs, 
-                                    by = c("entity", 
-                                           "sub_entity", 
-                                           "type", 
-                                           "origin"), copy = TRUE) |> 
-                   dplyr::relocate(sub_index, .after = "sub_entity")
-```
-
-
-```{r echo=FALSE}
-toc_url_centene
-```
-# Build the Centene RESP Table
 
 ```{r}
 toc_resp_centene <- toc_url_centene |> 
@@ -121,6 +129,61 @@ toc_resp_centene <- toc_resp_centene |>
 
 ```{r echo=FALSE}
 toc_resp_centene
+```
+
+<br><br>
+
+# Build the Out-of-Network Table
+
+<br>
+
+```{r}
+oon_urls_centene <- toc_resp_centene |> 
+                    dplyr::filter(type == "out_of_network") |> 
+                    dplyr::select(location) |> 
+                    dplyr::distinct() |> 
+                    tibble::deframe()
+
+oon_resp_centene <- oon_urls_centene |> 
+                    purrr::map_dfr(defog_oon)
+
+oon_resp_centene <- oon_resp_centene |> 
+  filter(!is.na(billing_code_type))
+```
+
+```{r echo=FALSE}
+oon_resp_centene
+```
+
+<br><br>
+
+# Build the In-Network Table
+
+<br>
+
+```{r}
+inn_urls_centene <- toc_resp_centene |> 
+                    dplyr::filter(type == "in_network") |> 
+                    dplyr::select(location) |> 
+                    dplyr::distinct() |> 
+                    tibble::deframe()
+```
+
+
+```{r echo=FALSE}
+inn_urls_centene
+```
+
+<br>
+
+```{r}
+inn_resp_cent.2 <- inn_urls_centene[2] |> 
+                   purrr::map_dfr(defog_inn)
+```
+
+
+```{r}
+inn_resp_cent.2
 ```
 
 <br><br>
@@ -153,6 +216,7 @@ dm_centene_only_pks <- dm_centene_no_keys |> dm::dm_add_pk(table = toc_url_cente
 ```{r echo=FALSE}
 dm_centene_only_pks
 ```
+
 <br><br>
 
 Now, we need to link the two tables by a foreign key:
@@ -169,6 +233,7 @@ dm_centene_all_keys <- dm_centene_only_pks |> dm::dm_add_fk(table = toc_resp_cen
 ```{r echo=FALSE}
 dm_centene_all_keys
 ```
+
 <br><br>
 
 ## Visualizing the Data Model
@@ -186,66 +251,3 @@ dm_centene_all_keys |> dm::dm_draw(rankdir = "LR", view_type = "all")
 ```
 
 <br><br>
-
-# Out-of-Network Files
-
-<br>
-
-```{r}
-centene_oon_urls <- centene_toc_resp |> 
-                    dplyr::filter(type == "out_of_network") |> 
-                    dplyr::select(location) |> 
-                    dplyr::distinct() |> 
-                    tibble::deframe()
-```
-
-
-```{r echo=FALSE}
-centene_oon_urls
-```
-<br><br>
-
-```{r}
-centene_oon_files <- centene_oon_urls |> 
-                     purrr::map_dfr(defog_oon)
-```
-
-```{r echo=FALSE}
-centene_oon_files
-```
-
-
-```{r}
-dm_centene_oon <- dm::dm(centene_oon_files)
-dm::dm_enum_pk_candidates(dm = dm_centene_oon, table = centene_oon_files)
-```
-
-<br><br>
-
-# In-Network Files
-
-<br>
-
-```{r}
-centene_inn_urls <- centene_toc_resp |> 
-                    dplyr::filter(type == "in_network") |> 
-                    dplyr::select(location) |> 
-                    dplyr::distinct() |> 
-                    tibble::deframe()
-```
-
-
-```{r echo=FALSE}
-centene_inn_urls
-```
-
-<br>
-
-```{r}
-# centene_inn_files <- centene_inn_urls |> 
-#                      purrr::map_dfr(defog_inn)
-```
-
-```{r echo=FALSE}
-# centene_inn_files
-```

@@ -7,7 +7,7 @@
 #' tidied list-columns of results split into groups.
 #'
 #' @export
-#'
+#' @autoglobal
 #' @examples
 #' \dontrun{defog_npi_wide(nppes_npi_response)}
 

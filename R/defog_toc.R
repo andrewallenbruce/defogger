@@ -7,12 +7,8 @@
 #' names, plan ID, ID type, market type(individual or group),
 #' the parent entity, rate type (in-network or out-of-network),
 #' and url location of each rate type's file.
-#'
+#' @autoglobal
 #' @export
-#'
-#' @examples
-#' defog_toc(tic_toc_url_ex)
-
 defog_toc <- function(url) {
 
   # Check for data input

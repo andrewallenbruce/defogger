@@ -4,6 +4,7 @@
 #' @return boolean, TRUE or FALSE
 #' @keywords internal
 #' @export
+#' @autoglobal
 #' @examples
 #' defog_npi_luhn(1528060837)
 
