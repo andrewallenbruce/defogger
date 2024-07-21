@@ -1,72 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/404.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/articles/bigger-data.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/articles/defogger.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/articles/tic-overview.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/index.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/reference/centene_toc_ex.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/reference/defog_inn.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/reference/defog_npi.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/reference/defog_npi_luhn.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/reference/defog_npi_wide.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/reference/defog_oon.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/reference/defog_toc.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/reference/defog_toc_centene.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/reference/defogger-package.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/reference/nppes_location_reference.html</loc>
-  </url>
-  <url>
-    <loc>https://andrewallenbruce.github.io/defogger/reference/tic_toc_url_ex.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://andrewallenbruce.github.io/defogger/404.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/LICENSE-text.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/LICENSE.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/articles/bigger-data.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/articles/defogger.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/articles/index.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/articles/tic-overview.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/authors.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/index.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/news/index.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/reference/centene_toc_ex.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/reference/defog_inn.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/reference/defog_npi.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/reference/defog_npi_luhn.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/reference/defog_npi_wide.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/reference/defog_oon.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/reference/defog_toc.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/reference/defog_toc_centene.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/reference/defogger-package.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/reference/index.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/reference/nppes_location_reference.html</loc></url>
+<url><loc>https://andrewallenbruce.github.io/defogger/reference/tic_toc_url_ex.html</loc></url>
 </urlset>
+
