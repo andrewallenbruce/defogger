@@ -4,9 +4,9 @@
 \name{defogger-package}
 \alias{defogger}
 \alias{defogger-package}
-\title{defogger: Streamlined Workflow for Transparency in Coverage (TiC) Data Analysis}
+\title{defogger: Tidy Transparency in Coverage (TiC) Tools}
 \description{
-The goal of defogger is to provide a collection of reliable open-source tools to work with Transparency in Coverage (TiC) files.
+A collection of tools to work with Transparency in Coverage (TiC) files.
 }
 \seealso{
 Useful links:
@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Andrew Bruce \email{andrewbruce.himni@gmail.com}
+\strong{Maintainer}: Andrew Bruce \email{andrewallenbruce@gmail.com}
 
 }
 \keyword{internal}

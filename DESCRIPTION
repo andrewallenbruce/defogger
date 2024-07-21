@@ -1,10 +1,10 @@
 Package: defogger
-Title: Streamlined Workflow for Transparency in Coverage (TiC) Data Analysis
+Title: Tidy Transparency in Coverage (TiC) Tools
 Version: 0.0.0.9001
 Authors@R: 
-    person("Andrew", "Bruce", , "andrewbruce.himni@gmail.com", role = c("aut", "cre"))
-Description: The goal of defogger is to provide a collection of reliable
-    open-source tools to work with Transparency in Coverage (TiC) files.
+    person("Andrew", "Bruce", , "andrewallenbruce@gmail.com", role = c("aut", "cre"))
+Maintainer: Andrew Bruce <andrewallenbruce@gmail.com>
+Description: A collection of tools to work with Transparency in Coverage (TiC) files.
 License: MIT + file LICENSE
 URL: https://github.com/andrewallenbruce/defogger,
     https://andrewallenbruce.github.io/defogger/
@@ -44,4 +44,4 @@ LazyData: true
 Roxygen: list(
     markdown = TRUE,
     roclets = c("collate", "namespace", "rd", "roxyglobals::global_roclet"))
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
